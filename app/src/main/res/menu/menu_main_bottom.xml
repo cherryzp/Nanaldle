@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_feed"
+        android:title="@string/menu_untitled"
+        android:enabled="true"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_dialog_dialer"/>
+
+    <item
+        android:id="@+id/menu_search"
+        android:title="@string/menu_untitled"
+        android:enabled="true"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_search"/>
+
+    <item
+        android:id="@+id/menu_write"
+        android:title="@string/menu_untitled"
+        android:enabled="true"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_input_add"/>
+
+    <item
+        android:id="@+id/menu_alert"
+        android:title="@string/menu_untitled"
+        android:enabled="true"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_popup_reminder"/>
+
+    <item
+        android:id="@+id/menu_mypage"
+        android:title="@string/menu_untitled"
+        android:enabled="true"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_myplaces"/>
+
+</menu>
