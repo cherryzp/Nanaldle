@@ -12,8 +12,7 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/layout_appbar_mypage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_mypage"
@@ -35,10 +34,10 @@
                 android:id="@+id/layout_tab_mypage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_scrollFlags="exitUntilCollapsed"
                 android:background="@color/color_white"
                 app:tabIndicatorColor="@color/color_black"
                 app:tabIndicatorHeight="2dp"
-                app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/color_black"
                 app:tabTextColor="@color/color_black">
 
