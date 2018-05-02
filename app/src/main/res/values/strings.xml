@@ -10,8 +10,6 @@
     <string name="password_accept">설정</string>
     <string name="password_cancel">설정안함</string>
 
-    <string name="menu_untitle"></string>
-
     <string name="hint_text_write">자유롭게 생각을 적어보세요</string>
 
     <string name="hint_text_search">해시태그 검색</string>
