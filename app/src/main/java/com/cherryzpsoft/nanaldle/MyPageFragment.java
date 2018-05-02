@@ -29,6 +29,7 @@ public class MyPageFragment extends Fragment {
 
         toolbar = view.findViewById(R.id.toolbar_mypage);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         tabLayout = view.findViewById(R.id.layout_tab_mypage);
 
