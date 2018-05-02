@@ -11,4 +11,6 @@
 
     <string name="menu_untitle"></string>
 
+    <string name="hint_text_write">자유롭게 생각을 적어보세요</string>
+
 </resources>

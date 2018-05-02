@@ -21,7 +21,9 @@
             android:name=".PasswordActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".WriteActivity"></activity>
+        <activity android:name=".WriteActivity"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
     </application>
 
 </manifest>
