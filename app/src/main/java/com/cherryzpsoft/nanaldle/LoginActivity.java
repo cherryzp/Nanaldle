@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +32,15 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity {
 
     TextView postponeLoginBtn;
 
     CallbackManager callbackManager;
     LoginButton loginButton;
+    ImageView facebookLoginBtn;
 
     JSONObject jsonData;
 
@@ -54,8 +58,11 @@ public class LoginActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
 
-        loginButton = findViewById(R.id.login_button);
-        setFacebookLoginBtn();
+        facebookLoginBtn = findViewById(R.id.btn_login_facebook);
+        facebookLoginBtn.setOnClickListener(loginListener);
+
+//        loginButton = findViewById(R.id.login_button);
+//        setFacebookLoginBtn();
 
         postponeLoginBtn = findViewById(R.id.login_postpone_btn);
         postponeLogin();
@@ -69,47 +76,88 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void setFacebookLoginBtn(){
-        loginButton.setReadPermissions("email", "public_profile");
+//    public void setFacebookLoginBtn(){
+//        loginButton.setReadPermissions("email", "public_profile");
+//
+//        // Callback registration
+//        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//
+//                GraphRequest request = GraphRequest.newMeRequest(
+//                        loginResult.getAccessToken(),
+//                        new GraphRequest.GraphJSONObjectCallback() {
+//                            @Override
+//                            public void onCompleted(JSONObject object, GraphResponse response) {
+//                                LoginActivity.this.loginObject = object;
+//                                jsonData = object;
+//
+//                                jsonParser();
+//
+//                                uploadDB();
+//
+//                                Log.e("user profile",object.toString());                            }
+//                        });
+//
+//                Bundle parameters = new Bundle();
+//                parameters.putString("fields", "id,name,email");
+//                request.setParameters(parameters);
+//                request.executeAsync();
+//
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                // App code
+//            }
+//
+//            @Override
+//            public void onError(FacebookException exception) {
+//                // App code
+//            }
+//        });
+//    }
 
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
+    View.OnClickListener loginListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "email"));
+            LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    GraphRequest request = GraphRequest.newMeRequest(
+                            loginResult.getAccessToken(),
+                            new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(JSONObject object, GraphResponse response) {
+                                    LoginActivity.this.loginObject = object;
+                                    jsonData = object;
 
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                LoginActivity.this.loginObject = object;
-                                jsonData = object;
+                                    jsonParser();
 
-                                jsonParser();
+                                    uploadDB();
 
-                                uploadDB();
+                                    Log.e("user profile",object.toString());                            }
+                            });
 
-                                Log.e("user profile",object.toString());                            }
-                        });
+                    Bundle parameters = new Bundle();
+                    parameters.putString("fields", "id,name,email");
+                    request.setParameters(parameters);
+                    request.executeAsync();
+                }
 
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email");
-                request.setParameters(parameters);
-                request.executeAsync();
+                @Override
+                public void onCancel() {
 
-            }
+                }
 
-            @Override
-            public void onCancel() {
-                // App code
-            }
+                @Override
+                public void onError(FacebookException error) {
 
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
-    }
+                }
+            });
+        }
+    };
 
     public void jsonParser(){
 

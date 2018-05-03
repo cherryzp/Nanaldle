@@ -16,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/login_image"/>
 
-    <com.facebook.login.widget.LoginButton
+<!--    <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,22 +24,22 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
         android:layout_below="@id/img_login"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"/>-->
 
     <ImageView
-        android:id="@+id/btn_login_naver"
+        android:id="@+id/btn_login_facebook"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:src="@drawable/naver_login_img"
+        android:src="@drawable/facebook_login_img"
         android:layout_marginVertical="8dp"
-        android:layout_below="@id/login_button"/>
+        android:layout_below="@id/img_login"/>
 
     <ImageView
         android:id="@+id/btn_login_kakao"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:src="@drawable/kakao_login_img"
-        android:layout_below="@id/btn_login_naver"/>
+        android:layout_below="@id/btn_login_facebook"/>
 
     <TextView
         android:id="@+id/login_comment"
