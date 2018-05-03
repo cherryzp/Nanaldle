@@ -2,8 +2,6 @@
 	
 	header('Content-Type:text/html; charset=utf-8');
 
-	$id = $_POST['id'];
-	$name = $_POST['name'];
 	$email = $_POST['email'];
 
 	$conn = mysqli_connect("localhost", "win9101", "cpflwmq9094", "win9101");

@@ -8,24 +8,36 @@
     android:padding="16dp">
 
     <ImageView
+        android:id="@+id/img_add"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:src="@android:drawable/ic_menu_gallery" />
 
     <ImageView
+        android:id="@+id/emoticon_add"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_centerHorizontal="true"
         android:src="@android:drawable/ic_menu_report_image"/>
 
     <ImageView
+        android:id="@+id/tag_add"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_alignParentRight="true"
         android:src="@android:drawable/ic_menu_help"/>
 
-    <EditText
+    <ImageView
         android:layout_marginTop="120dp"
+        android:id="@+id/selected_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id="@+id/text_content"
+        android:layout_marginTop="24dp"
+        android:layout_below="@id/selected_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
@@ -37,6 +49,7 @@
         android:textColor="@color/color_black"/>
 
     <TextView
+        android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="저장"
@@ -48,6 +61,7 @@
         android:clickable="true"/>
 
     <TextView
+        android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="취소"

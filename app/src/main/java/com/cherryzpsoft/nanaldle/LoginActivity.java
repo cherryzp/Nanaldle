@@ -43,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     LoginButton loginButton;
     ImageView facebookLoginBtn;
 
+    boolean isUploaded = false;
+
     ImageView kakaoLoginBtn;
 
     JSONObject jsonData;
@@ -146,13 +148,10 @@ public class LoginActivity extends AppCompatActivity {
 
                                     jsonParser();
                                     saveStorageLoginData();
+
                                     uploadDB();
 
                                     Log.e("user profile", object.toString());
-
-                                    startActivity(new Intent(LoginActivity.this, PasswordActivity.class));
-
-                                    finish();
                                 }
                             });
 
@@ -262,6 +261,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 if(loginEmail.equals(response)){
+                    isUploaded = true;
                     new AlertDialog.Builder(LoginActivity.this).setMessage(response).setPositiveButton("OK", null).create().show();
                 }
             }
@@ -272,8 +272,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        multiPartRequest.addStringParam("id", loginId);
-        multiPartRequest.addStringParam("name", loginName);
         multiPartRequest.addStringParam("email", loginEmail);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
