@@ -16,30 +16,33 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/login_image"/>
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_below="@id/img_login"
+        android:layout_centerHorizontal="true"/>
+
     <ImageView
         android:id="@+id/btn_login_naver"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:src="@drawable/naver_login_img"
-        android:layout_marginTop="54dp"
-        android:layout_below="@id/img_login"/>
-
-    <ImageView
-        android:id="@+id/btn_login_facebook"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:src="@drawable/facebook_login_img"
         android:layout_marginVertical="8dp"
-        android:layout_below="@id/btn_login_naver"/>
+        android:layout_below="@id/login_button"/>
 
     <ImageView
         android:id="@+id/btn_login_kakao"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:src="@drawable/kakao_login_img"
-        android:layout_below="@id/btn_login_facebook"/>
+        android:layout_below="@id/btn_login_naver"/>
 
     <TextView
+        android:id="@+id/login_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_comment"
@@ -50,12 +53,12 @@
         android:layout_below="@id/btn_login_kakao"/>
 
     <TextView
-        android:id="@+id/login_delay_btn"
+        android:id="@+id/login_postpone_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:text="@string/login_delay"
+        android:text="@string/login_postpone"
         android:textStyle="bold"
         android:clickable="true"
         android:textColor="@color/color_black"

@@ -4,7 +4,10 @@
     <string name="menu_untitled"></string>
 
     <string name="login_comment">로그인 없이 이용하는 경우 \n일부 앱 이용에 제한이 있을 수 있습니다.</string>
-    <string name="login_delay">나중에 할게요</string>
+    <string name="login_postpone">나중에 할게요</string>
+
+    <string name="facebook_app_id">243204209584071</string>
+    <string name="fb_login_protocol_scheme">fb243204209584071</string>
 
     <string name="password_title">비밀번호 설정</string>
     <string name="password_accept">설정</string>
