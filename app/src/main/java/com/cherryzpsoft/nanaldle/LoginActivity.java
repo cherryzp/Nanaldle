@@ -229,7 +229,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void uploadDB() {
 
-        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/insertDB.php";
+        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/insertLoginDB.php";
 
         SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
             @Override
@@ -255,7 +255,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void downloadDB() {
 
-        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/loadDB.php";
+        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/loadLoginDB.php";
 
         SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
             @Override

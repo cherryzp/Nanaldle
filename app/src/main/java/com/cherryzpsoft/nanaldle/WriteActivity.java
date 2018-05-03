@@ -2,6 +2,7 @@ package com.cherryzpsoft.nanaldle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +27,22 @@ public class WriteActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btn_save);
         btnCancel = findViewById(R.id.btn_cancel);
 
-
+        btnSave.setOnClickListener(btnSaveListener);
+        btnCancel.setOnClickListener(btnCancelListener);
 
     }
+
+    View.OnClickListener btnSaveListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
+
+    View.OnClickListener btnCancelListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
 }
