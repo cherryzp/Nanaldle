@@ -2,6 +2,7 @@ package com.cherryzpsoft.nanaldle;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
     LoginButton loginButton;
     ImageView facebookLoginBtn;
 
+    ImageView kakaoLoginBtn;
+
     JSONObject jsonData;
 
     String loginId, loginName, loginEmail;
@@ -61,6 +64,14 @@ public class LoginActivity extends AppCompatActivity {
         facebookLoginBtn = findViewById(R.id.btn_login_facebook);
         facebookLoginBtn.setOnClickListener(loginListener);
 
+        kakaoLoginBtn = findViewById(R.id.btn_login_kakao);
+        kakaoLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadStorageLoginData();
+                downloadDB();
+            }
+        });
 //        loginButton = findViewById(R.id.login_button);
 //        setFacebookLoginBtn();
 
@@ -134,10 +145,15 @@ public class LoginActivity extends AppCompatActivity {
                                     jsonData = object;
 
                                     jsonParser();
-
+                                    saveStorageLoginData();
                                     uploadDB();
 
-                                    Log.e("user profile",object.toString());                            }
+                                    Log.e("user profile", object.toString());
+
+                                    startActivity(new Intent(LoginActivity.this, PasswordActivity.class));
+
+                                    finish();
+                                }
                             });
 
                     Bundle parameters = new Bundle();
@@ -159,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
-    public void jsonParser(){
+    public void jsonParser() {
 
         try {
             loginId = jsonData.getString("id");
@@ -171,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void postponeLogin(){
+    public void postponeLogin() {
         postponeLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,7 +210,25 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void uploadDB(){
+    public void saveStorageLoginData(){
+        SharedPreferences preferences = getSharedPreferences("LoginData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString("id", loginId);
+        editor.putString("name", loginName);
+        editor.putString("email", loginEmail);
+
+        editor.commit();
+    }
+
+    public void loadStorageLoginData(){
+        SharedPreferences preferences = getSharedPreferences("LoginData", MODE_PRIVATE);
+        loginId = preferences.getString("id", "로그인 정보 없음");
+        loginName = preferences.getString("name", "로그인 정보 없음");
+        loginEmail = preferences.getString("email", "로그인 정보 없음");
+    }
+
+    public void uploadDB() {
 
         String serverUrl = "http://win9101.dothome.co.kr/nanaldle/insertDB.php";
 
@@ -207,6 +241,34 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        multiPartRequest.addStringParam("id", loginId);
+        multiPartRequest.addStringParam("name", loginName);
+        multiPartRequest.addStringParam("email", loginEmail);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        requestQueue.add(multiPartRequest);
+
+    }
+
+    public void downloadDB() {
+
+        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/loadDB.php";
+
+        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(loginEmail.equals(response)){
+                    new AlertDialog.Builder(LoginActivity.this).setMessage(response).setPositiveButton("OK", null).create().show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
             }
         });
 

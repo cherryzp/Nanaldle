@@ -39,7 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:src="@drawable/kakao_login_img"
-        android:layout_below="@id/btn_login_facebook"/>
+        android:layout_below="@id/btn_login_facebook"
+        android:clickable="true"/>
 
     <TextView
         android:id="@+id/login_comment"
