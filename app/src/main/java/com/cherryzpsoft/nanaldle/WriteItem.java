@@ -1,11 +1,14 @@
 package com.cherryzpsoft.nanaldle;
 
+import android.net.Uri;
+
+import java.net.URI;
 import java.net.URL;
 
 public class WriteItem {
 
     private String Content;
-    private URL img;
+    private Uri img;
     private String tag;
     private String emoticon;
     private String Date;
@@ -18,11 +21,11 @@ public class WriteItem {
         Content = content;
     }
 
-    public URL getImg() {
+    public Uri getImg() {
         return img;
     }
 
-    public void setImg(URL img) {
+    public void setImg(Uri img) {
         this.img = img;
     }
 
@@ -49,13 +52,4 @@ public class WriteItem {
     public void setDate(String date) {
         Date = date;
     }
-
-    public WriteItem(String content, URL img, String tag, String emoticon, String date) {
-        Content = content;
-        this.img = img;
-        this.tag = tag;
-        this.emoticon = emoticon;
-        Date = date;
-    }
-
 }
