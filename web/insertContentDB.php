@@ -16,14 +16,14 @@
 	$dstName = "uploads/IMG_".date(Ymd_his).$fileExtension;
 
 	if ( move_uploaded_file($tmpImgName, $dstName)){
-		echo "upload success\n"
+		echo "upload success\n";
 	} else {
-		echo "upload fail\n"
+		echo "upload fail\n";
 	}
-
+	
 	echo "$content\n";
 	echo "$msg\n";
-	echo "$dstName\n"
+	echo "$dstName\n";
 
 	$dateTime = date("Y/m/d h:i:s");
 
@@ -31,13 +31,19 @@
 
 	mysqli_query($conn, "set names utf8");
 
-	$sql = "INSERT INTO main_contents(content, img, tag, date) VALUES('$content','$img','$tag','$dateTime')";
+
+	if($srcImgName){
+		$sql = "INSERT INTO main_contents(content, img, tag, emoticon, date) VALUES('$content','$dstName','$tag', '$emoticon', '$dateTime')";	
+	}else{
+		$sql = "INSERT INTO main_contents(content, tag, emoticon, date) VALUES('$content', '$tag', '$emoticon', '$dateTime')";
+	}
+	
 	$result = mysqli_query($conn, $sql);
 
 	if($result){
 		echo "insert success";
 	} else {
-		echo "insert fail"
+		echo "insert fail";
 	}
 
 	mysqli_close($conn);
