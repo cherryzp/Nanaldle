@@ -42,6 +42,9 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         vh.ivEmoticon.setImageResource(R.drawable.emoticon_01);
         if(item.getImg()!=null){
             Glide.with(context).load(item.getImg()).into(vh.ivContent);
+            vh.ivContent.setVisibility(View.VISIBLE);
+        } else {
+            vh.ivContent.setVisibility(View.GONE);
         }
         vh.tvContent.setText(item.getContent());
 

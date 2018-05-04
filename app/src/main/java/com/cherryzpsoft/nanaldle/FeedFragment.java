@@ -102,8 +102,10 @@ public class FeedFragment extends Fragment {
                 jsonObject = jsonArray.getJSONObject(i);
                 item.setEmoticon(jsonObject.getString("emoticon"));
                 item.setDate(jsonObject.getString("date"));
-                Uri uri = Uri.parse("http://win9101.dothome.co.kr/nanaldle/" + jsonObject.getString("img"));
-                item.setImg(uri);
+                if(!jsonObject.getString("img").toString().equals("unknownImg")) {
+                    Uri uri = Uri.parse("http://win9101.dothome.co.kr/nanaldle/" + jsonObject.getString("img"));
+                    item.setImg(uri);
+                }
                 item.setContent(jsonObject.getString("content"));
                 items.add(item);
 
