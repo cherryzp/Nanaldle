@@ -6,7 +6,7 @@
 
 	mysqli_query($conn, "set names utf8");
 
-	$sql = "SELECT content, img, tag, emoticon, date FROM main_contents";
+	$sql = "SELECT content, img, tag, emoticon, date FROM main_contents ORDER BY num DESC";
 	$result = mysqli_query($conn, $sql);
 
 	$row_num = mysqli_num_rows($result);

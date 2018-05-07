@@ -1,6 +1,7 @@
 package com.cherryzpsoft.nanaldle;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,9 +14,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuPopupHelper;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +41,7 @@ public class WriteActivity extends AppCompatActivity {
     EditText textContent;
     TextView btnSave, btnCancel;
 
+    int emoticonNum = 0;
     String imgPath;
 
     @Override
@@ -59,9 +66,9 @@ public class WriteActivity extends AppCompatActivity {
         btnSave.setOnClickListener(btnSaveListener);
         btnCancel.setOnClickListener(btnCancelListener);
 
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
-            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, ADD_IMG_REQUEST_CODE );
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, ADD_IMG_REQUEST_CODE);
             }
         }
 
@@ -70,9 +77,9 @@ public class WriteActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        switch (requestCode){
+        switch (requestCode) {
             case ADD_IMG_REQUEST_CODE:
-                if(grantResults[0]==PackageManager.PERMISSION_DENIED){
+                if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                     Toast.makeText(this, "이미지 선택이 불가능합니다..", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -90,11 +97,85 @@ public class WriteActivity extends AppCompatActivity {
     };
 
     View.OnClickListener addEmoticonListener = new View.OnClickListener() {
+        @SuppressLint("RestrictedApi")
         @Override
         public void onClick(View v) {
 
+            MenuBuilder menuBuilder = new MenuBuilder(WriteActivity.this);
+            MenuInflater inflater = new MenuInflater(WriteActivity.this);
+            inflater.inflate(R.menu.popup_emoticon, menuBuilder);
+            MenuPopupHelper menuPopupHelper = new MenuPopupHelper(WriteActivity.this, menuBuilder, v);
+            menuPopupHelper.setForceShowIcon(true);
+
+            menuBuilder.setCallback(emoticonSelectedCallback);
+
+            menuPopupHelper.show();
+
         }
     };
+
+    MenuBuilder.Callback emoticonSelectedCallback = new MenuBuilder.Callback() {
+        @Override
+        public boolean onMenuItemSelected(MenuBuilder menu, MenuItem item) {
+
+            switch (item.getItemId()) {
+                case R.id.emoticon_01:
+                    addEmoticon.setImageResource(R.drawable.emoticon_01);
+                    emoticonNum = 0;
+                    break;
+
+                case R.id.emoticon_02:
+                    addEmoticon.setImageResource(R.drawable.emoticon_02);
+                    emoticonNum = 1;
+                    break;
+
+                case R.id.emoticon_03:
+                    addEmoticon.setImageResource(R.drawable.emoticon_03);
+                    emoticonNum = 2;
+                    break;
+
+                case R.id.emoticon_04:
+                    addEmoticon.setImageResource(R.drawable.emoticon_04);
+                    emoticonNum = 3;
+                    break;
+
+                case R.id.emoticon_05:
+                    addEmoticon.setImageResource(R.drawable.emoticon_05);
+                    emoticonNum = 4;
+                    break;
+
+                case R.id.emoticon_06:
+                    addEmoticon.setImageResource(R.drawable.emoticon_06);
+                    emoticonNum = 5;
+                    break;
+
+                case R.id.emoticon_07:
+                    addEmoticon.setImageResource(R.drawable.emoticon_07);
+                    emoticonNum = 6;
+                    break;
+
+                case R.id.emoticon_08:
+                    addEmoticon.setImageResource(R.drawable.emoticon_08);
+                    emoticonNum = 8;
+                    break;
+
+                case R.id.emoticon_09:
+                    addEmoticon.setImageResource(R.drawable.emoticon_09);
+                    emoticonNum = 9;
+                    break;
+
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onMenuModeChange(MenuBuilder menu) {
+
+        }
+    };
+
+
 
     View.OnClickListener addTagListener = new View.OnClickListener() {
         @Override
@@ -127,11 +208,11 @@ public class WriteActivity extends AppCompatActivity {
                         }
                     });
 
-                    multiPartRequest.addStringParam("content", "콘텐츠입니다.");
-                    if(imgPath!=null)
+                    multiPartRequest.addStringParam("content", textContent.getText().toString());
+                    if (imgPath != null)
                         multiPartRequest.addFile("img", imgPath);
                     multiPartRequest.addStringParam("tag", "태그입니다.");
-                    multiPartRequest.addStringParam("emoticon", "이모티콘");
+                    multiPartRequest.addStringParam("emoticon", emoticonNum+"");
 
                     RequestQueue requestQueue = Volley.newRequestQueue(WriteActivity.this);
                     requestQueue.add(multiPartRequest);
@@ -155,12 +236,12 @@ public class WriteActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        switch (requestCode){
+        switch (requestCode) {
             case IMG_CALL_REQUEST_CODE:
 
                 if (resultCode == RESULT_OK) {
                     Uri uri = data.getData();
-                    if(uri!=null){
+                    if (uri != null) {
                         selectedImg.setImageURI(uri);
                         selectedImg.setVisibility(View.VISIBLE);
                         imgPath = getRealPathFromUri(uri);
@@ -172,8 +253,8 @@ public class WriteActivity extends AppCompatActivity {
 
     }
 
-    String getRealPathFromUri(Uri uri){
-        String[] proj= {MediaStore.Images.Media.DATA};
+    String getRealPathFromUri(Uri uri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
         CursorLoader loader = new CursorLoader(this, uri, proj, null, null, null);
         Cursor cursor = loader.loadInBackground();
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);

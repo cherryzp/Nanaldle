@@ -39,7 +39,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
 
         WriteItem item = items.get(position);
         vh.tvDate.setText(item.getDate());
-        vh.ivEmoticon.setImageResource(R.drawable.emoticon_01);
+        vh.ivEmoticon.setImageResource(R.drawable.emoticon_01+Integer.parseInt(item.getEmoticon()));
         if(item.getImg()!=null){
             Glide.with(context).load(item.getImg()).into(vh.ivContent);
             vh.ivContent.setVisibility(View.VISIBLE);
@@ -47,6 +47,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             vh.ivContent.setVisibility(View.GONE);
         }
         vh.tvContent.setText(item.getContent());
+        vh.tvTag.setText("#"+item.getTag());
 
     }
 
@@ -61,6 +62,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         ImageView ivEmoticon;
         ImageView ivContent;
         TextView tvContent;
+        TextView tvTag;
 
         public VH(View itemView) {
             super(itemView);
@@ -69,6 +71,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             ivEmoticon = itemView.findViewById(R.id.emoticon_card_feed);
             ivContent = itemView.findViewById(R.id.img_content_feed);
             tvContent = itemView.findViewById(R.id.text_content_feed);
+            tvTag = itemView.findViewById(R.id.text_tag_feed);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

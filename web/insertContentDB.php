@@ -35,7 +35,7 @@
 	if($srcImgName){
 		$sql = "INSERT INTO main_contents(content, img, tag, emoticon, date) VALUES('$content','$dstName','$tag', '$emoticon', '$dateTime')";	
 	}else{
-		$sql = "INSERT INTO main_contents(content, img, tag, emoticon, date) VALUES('$content', 'unknownImg', '$tag', '$emoticon', '$dateTime')";
+		$sql = "INSERT INTO main_contents(content, img, tag, emoticon, date) VALUES('$content', 'null', '$tag', '$emoticon', '$dateTime')";
 	}
 	
 	$result = mysqli_query($conn, $sql);
