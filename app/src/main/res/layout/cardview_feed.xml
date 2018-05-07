@@ -69,13 +69,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
 
+        <ToggleButton
             android:id="@+id/btn_like"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginHorizontal="4dp"
-            android:src="@drawable/like_unselected_icon" />
+            android:textOn=""
+            android:textOff=""
+            android:background="@drawable/tb_selected_like" />
 
         <ImageView
             android:id="@+id/btn_comments"

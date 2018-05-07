@@ -6,8 +6,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 
@@ -19,7 +22,8 @@ public class DetailContentActivity extends AppCompatActivity {
     TextView tvContent;
     TextView tvTag;
 
-    ImageView likeBtn, commentsBtn;
+    ToggleButton likeBtn;
+    ImageView commentsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +39,29 @@ public class DetailContentActivity extends AppCompatActivity {
         setItem();
 
         likeBtn = findViewById(R.id.btn_like);
-        likeBtn.setOnClickListener(likeListener);
+        likeBtn.setOnCheckedChangeListener(likeChangeListener);
 
         commentsBtn = findViewById(R.id.btn_comments);
         commentsBtn.setOnClickListener(commentsListener);
-
     }
 
-    View.OnClickListener likeListener = new View.OnClickListener() {
+    CompoundButton.OnCheckedChangeListener likeChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
-        public void onClick(View v) {
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            switch (buttonView.getId()){
+                case R.id.btn_like:
+                    if(isChecked){
+                        //선택됨
+                        new AlertDialog.Builder(DetailContentActivity.this).setMessage("선택됨").setPositiveButton("예", null).create().show();
+                    }else{
+                        //선택되지 않음
+                        new AlertDialog.Builder(DetailContentActivity.this).setMessage("노놉").setPositiveButton("예", null).create().show();
+
+                    }
+
+                    break;
+            }
 
         }
     };

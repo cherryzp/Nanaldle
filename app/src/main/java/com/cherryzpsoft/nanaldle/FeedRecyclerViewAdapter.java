@@ -6,13 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 
@@ -68,6 +71,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         ImageView ivContent;
         TextView tvContent;
         TextView tvTag;
+        ToggleButton likeBtn;
 
         public VH(View itemView) {
             super(itemView);
@@ -77,6 +81,9 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             ivContent = itemView.findViewById(R.id.img_content_feed);
             tvContent = itemView.findViewById(R.id.text_content_feed);
             tvTag = itemView.findViewById(R.id.text_tag_feed);
+
+            likeBtn = itemView.findViewById(R.id.btn_like);
+            likeBtn.setOnCheckedChangeListener(likeChangeListener);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -99,7 +106,26 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
 
                 }
             });
+
         }
 
     }
+
+    CompoundButton.OnCheckedChangeListener likeChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            switch (buttonView.getId()){
+                case R.id.btn_like:
+                    if(isChecked){
+                        new AlertDialog.Builder(context).setMessage("선택됨").setPositiveButton("예", null).create().show();
+                    } else {
+                        new AlertDialog.Builder(context).setMessage("노놉").setPositiveButton("예", null).create().show();
+                    }
+
+                    break;
+            }
+        }
+    };
+
+
 }
