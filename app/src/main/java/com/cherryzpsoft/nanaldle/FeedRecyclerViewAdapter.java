@@ -1,8 +1,13 @@
 package com.cherryzpsoft.nanaldle;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +81,21 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    Intent intent = new Intent(context, DetailContentActivity.class);
+
+                    intent.putExtra("date", items.get(getLayoutPosition()).getDate());
+                    intent.putExtra("emoticon", items.get(getLayoutPosition()).getEmoticon());
+                    intent.putExtra("img_content", items.get(getLayoutPosition()).getImg());
+                    intent.putExtra("tv_content", items.get(getLayoutPosition()).getContent());
+                    intent.putExtra("tag", items.get(getLayoutPosition()).getTag());
+
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)context, new Pair<View, String>(ivContent, "IMG"));
+                        context.startActivity(intent, options.toBundle());
+                    } else {
+                        context.startActivity(intent);
+                    }
 
                 }
             });

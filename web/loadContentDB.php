@@ -6,7 +6,7 @@
 
 	mysqli_query($conn, "set names utf8");
 
-	$sql = "SELECT content, img, tag, emoticon, date FROM main_contents ORDER BY num DESC";
+	$sql = "SELECT DISTINCT m.content, m.img, t.tag_item, m.emoticon, date FROM main_contents AS m LEFT OUTER JOIN hashtag AS t ON m.no=t.content_no ORDER BY m.no DESC";
 	$result = mysqli_query($conn, $sql);
 
 	$row_num = mysqli_num_rows($result);
@@ -16,7 +16,7 @@
 	for($i=0; $i<$row_num; $i++){
 		mysqli_data_seek($result, $i);
 		$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-		echo "{\"content\":\"$row[content]\", \"img\":\"$row[img]\", \"tag\":\"$row[tag]\", \"emoticon\":\"$row[emoticon]\", \"date\":\"$row[date]\"}";
+		echo "{\"content\":\"$row[content]\", \"img\":\"$row[img]\", \"tag\":\"$row[tag_item]\", \"emoticon\":\"$row[emoticon]\", \"date\":\"$row[date]\"}";
 		if($i!=$row_num-1){
 			echo",\n";
 		}

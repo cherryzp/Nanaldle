@@ -8,10 +8,11 @@ import java.net.URL;
 public class WriteItem {
 
     private String Content;
-    private Uri img;
+    private String img;
     private String tag;
     private String emoticon;
     private String Date;
+    private String email;
 
     public String getContent() {
         return Content;
@@ -21,11 +22,11 @@ public class WriteItem {
         Content = content;
     }
 
-    public Uri getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(Uri img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
@@ -51,5 +52,13 @@ public class WriteItem {
 
     public void setDate(String date) {
         Date = date;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

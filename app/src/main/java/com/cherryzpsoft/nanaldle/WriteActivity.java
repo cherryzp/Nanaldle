@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -184,6 +185,8 @@ public class WriteActivity extends AppCompatActivity {
         }
     };
 
+    
+
     View.OnClickListener btnSaveListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -199,6 +202,7 @@ public class WriteActivity extends AppCompatActivity {
                     SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+                            new AlertDialog.Builder(WriteActivity.this).setMessage(response).setPositiveButton("ㅇㅋ", null).create().show();
                             finish();
                         }
                     }, new Response.ErrorListener() {
@@ -208,12 +212,13 @@ public class WriteActivity extends AppCompatActivity {
                         }
                     });
 
+
                     multiPartRequest.addStringParam("content", textContent.getText().toString());
                     if (imgPath != null)
                         multiPartRequest.addFile("img", imgPath);
                     multiPartRequest.addStringParam("tag", "태그입니다.");
                     multiPartRequest.addStringParam("emoticon", emoticonNum+"");
-
+                    multiPartRequest.addStringParam("email", getSharedPreferences("LoginData", MODE_PRIVATE).getString("email", "null"));
                     RequestQueue requestQueue = Volley.newRequestQueue(WriteActivity.this);
                     requestQueue.add(multiPartRequest);
 
