@@ -11,7 +11,7 @@
 
 	$row_num = mysqli_num_rows($result);
 
-	$sql2 = "SELECT m.no, COUNT(m.no=l.content_no) like_count FROM main_contents m LEFT OUTER JOIN contents_like l ON m.no=l.content_no GROUP BY m.no";
+	$sql2 = "SELECT m.no, COUNT(m.no=l.content_no) like_count FROM main_contents m LEFT OUTER JOIN contents_like l ON m.no=l.content_no GROUP BY m.no ORDER BY m.no DESC";
 	$result2 = mysqli_query($conn, $sql2);
 
 	echo "[";

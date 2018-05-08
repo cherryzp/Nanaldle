@@ -84,7 +84,12 @@ public class DetailContentActivity extends AppCompatActivity {
         tvDate.setText(intent.getStringExtra("date"));
         ivEmoticon.setImageResource(R.drawable.emoticon_01+Integer.parseInt(intent.getStringExtra("emoticon")));
         tvContent.setText(intent.getStringExtra("tv_content"));
-        tvTag.setText(intent.getStringExtra("like_count") + "좋아요   #" + intent.getStringExtra("tag"));
+        if(intent.getStringExtra("tag")!=null){
+            tvTag.setText(intent.getStringExtra("like_count") + "좋아요");
+        }else {
+            tvTag.setText(intent.getStringExtra("like_count") + "좋아요   #" + intent.getStringExtra("tag"));
+        }
+
 
         if(intent.getStringExtra("img_content")!=null){
             Glide.with(this).load(intent.getStringExtra("img_content")).into(ivContent);

@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.view.menu.MenuPopupHelper;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +42,9 @@ public class WriteActivity extends AppCompatActivity {
     ImageView selectedImg;
     EditText textContent;
     TextView btnSave, btnCancel;
+
+    EditText editHashtag;
+    String hashtag;
 
     int emoticonNum = 0;
     String imgPath;
@@ -181,6 +185,28 @@ public class WriteActivity extends AppCompatActivity {
     View.OnClickListener addTagListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            AlertDialog.Builder hashtagBuilder = new AlertDialog.Builder(WriteActivity.this);
+
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.hashtag_dialog, null);
+            editHashtag = dialogView.findViewById(R.id.dialog_edittext_hashtag);
+            if(hashtag!=null) editHashtag.setText(hashtag);
+            hashtagBuilder.setPositiveButton("작성", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if(!editHashtag.getText().toString().equals("")){
+                        Toast.makeText(WriteActivity.this, "작성됨.", Toast.LENGTH_SHORT).show();
+                        hashtag = editHashtag.getText().toString();
+                    } else{
+                        Toast.makeText(WriteActivity.this, "글을 작성해주세요.", Toast.LENGTH_SHORT).show();
+                        hashtag = null;
+                    }
+                }
+            });
+
+            hashtagBuilder.setNegativeButton("취소", null);
+
+            hashtagBuilder.setView(dialogView).create().show();
 
         }
     };
@@ -212,16 +238,14 @@ public class WriteActivity extends AppCompatActivity {
                         }
                     });
 
-
                     multiPartRequest.addStringParam("content", textContent.getText().toString());
                     if (imgPath != null)
                         multiPartRequest.addFile("img", imgPath);
-                    multiPartRequest.addStringParam("tag", "태그입니다.");
+                    multiPartRequest.addStringParam("tag", hashtag);
                     multiPartRequest.addStringParam("emoticon", emoticonNum+"");
                     multiPartRequest.addStringParam("email", getSharedPreferences("LoginData", MODE_PRIVATE).getString("email", "null"));
                     RequestQueue requestQueue = Volley.newRequestQueue(WriteActivity.this);
                     requestQueue.add(multiPartRequest);
-
 
                 }
             });

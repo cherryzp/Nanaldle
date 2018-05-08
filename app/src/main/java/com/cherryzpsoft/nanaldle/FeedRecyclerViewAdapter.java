@@ -62,7 +62,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             vh.ivContent.setVisibility(View.GONE);
         }
         vh.tvContent.setText(item.getContent());
-        vh.tvTag.setText("#"+item.getTag());
+        if(item.getTag()!=null) vh.tvTag.setText("#"+item.getTag());
 
     }
 
@@ -155,7 +155,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                     intent.putExtra("emoticon", items.get(getLayoutPosition()).getEmoticon());
                     intent.putExtra("img_content", items.get(getLayoutPosition()).getImg());
                     intent.putExtra("tv_content", items.get(getLayoutPosition()).getContent());
-                    intent.putExtra("tag", items.get(getLayoutPosition()).getTag());
+                    if(items.get(getLayoutPosition()).getTag()!=null) intent.putExtra("tag", items.get(getLayoutPosition()).getTag());
                     intent.putExtra("like_count", items.get(getLayoutPosition()).getLikeCount());
 
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){

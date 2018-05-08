@@ -102,11 +102,9 @@ public class FeedFragment extends Fragment {
                 jsonObject = jsonArray.getJSONObject(i);
                 item.setEmoticon(jsonObject.getString("emoticon"));
                 item.setDate(jsonObject.getString("date"));
-                if(!jsonObject.getString("img").toString().equals("null")) {
-                    item.setImg("http://win9101.dothome.co.kr/nanaldle/" + jsonObject.getString("img"));
-                }
+                if(!jsonObject.getString("img").toString().equals("null")) item.setImg("http://win9101.dothome.co.kr/nanaldle/" + jsonObject.getString("img"));
                 item.setContent(jsonObject.getString("content"));
-                item.setTag(jsonObject.getString("tag"));
+                if(!jsonObject.getString("tag").toString().equals("null")) item.setTag(jsonObject.getString("tag"));
                 item.setLikeCount(jsonObject.getString("like_count"));
                 items.add(item);
 

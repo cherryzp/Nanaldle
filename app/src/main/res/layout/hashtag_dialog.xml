@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="250dp"
+    android:layout_height="150dp"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/dialog_edittext_hashtag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/color_black"
+        android:hint="태그는 1개만 가능합니다."
+        />
+
+</RelativeLayout>
