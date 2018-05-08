@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -15,8 +16,14 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -83,7 +90,60 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             tvTag = itemView.findViewById(R.id.text_tag_feed);
 
             likeBtn = itemView.findViewById(R.id.btn_like);
-            likeBtn.setOnCheckedChangeListener(likeChangeListener);
+            likeBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    switch (buttonView.getId()){
+                        case R.id.btn_like:
+                            if(isChecked){
+
+                                String serverUrl = "http://win9101.dothome.co.kr/nanaldle/likeCheckDB.php";
+
+                                SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        new AlertDialog.Builder(context).setMessage(response).setPositiveButton("예", null).create().show();
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                    }
+                                });
+
+                                multiPartRequest.addStringParam("date", items.get(getLayoutPosition()).getDate());
+                                multiPartRequest.addStringParam("email", context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null") );
+
+                                RequestQueue requestQueue = Volley.newRequestQueue(context);
+                                requestQueue.add(multiPartRequest);
+
+                            } else {
+
+                                String serverUrl = "http://win9101.dothome.co.kr/nanaldle/likeUncheckDB.php";
+
+                                SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        new AlertDialog.Builder(context).setMessage(response).setPositiveButton("예", null).create().show();
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                    }
+                                });
+
+                                multiPartRequest.addStringParam("date", items.get(getLayoutPosition()).getDate());
+
+                                RequestQueue requestQueue = Volley.newRequestQueue(context);
+                                requestQueue.add(multiPartRequest);
+
+                            }
+
+                            break;
+                    }
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,6 +156,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                     intent.putExtra("img_content", items.get(getLayoutPosition()).getImg());
                     intent.putExtra("tv_content", items.get(getLayoutPosition()).getContent());
                     intent.putExtra("tag", items.get(getLayoutPosition()).getTag());
+                    intent.putExtra("like_count", items.get(getLayoutPosition()).getLikeCount());
 
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)context, new Pair<View, String>(ivContent, "IMG"));
@@ -110,22 +171,5 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         }
 
     }
-
-    CompoundButton.OnCheckedChangeListener likeChangeListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            switch (buttonView.getId()){
-                case R.id.btn_like:
-                    if(isChecked){
-                        new AlertDialog.Builder(context).setMessage("선택됨").setPositiveButton("예", null).create().show();
-                    } else {
-                        new AlertDialog.Builder(context).setMessage("노놉").setPositiveButton("예", null).create().show();
-                    }
-
-                    break;
-            }
-        }
-    };
-
 
 }

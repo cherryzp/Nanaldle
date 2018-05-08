@@ -14,7 +14,7 @@
 	$len = count($arr);
 	$fileExtension = ".".$arr[$len-1];
 
-	$dstName = "uploads/IMG_".date(Ymd_his).$fileExtension;
+	$dstName = "uploads/IMG_".date(Ymd_His).$fileExtension;
 
 	if ( move_uploaded_file($tmpImgName, $dstName)){
 		echo "upload success\n";
@@ -27,7 +27,7 @@
 	echo "$dstName\n";
 	echo "$email\n";
 
-	$dateTime = date("Y/m/d h:i:s");
+	$dateTime = date("Y/m/d H:i:s");
 
 	$conn = mysqli_connect("localhost", "win9101", "cpflwmq9094", "win9101");
 
@@ -35,9 +35,9 @@
 
 
 	if($srcImgName){
-		$sql = "INSERT INTO main_contents(content, img, tag, emoticon, date, email) VALUES('$content','$dstName','$tag', '$emoticon', '$dateTime', '$email')";	
+		$sql = "INSERT INTO main_contents(content, img, emoticon, date, email) VALUES('$content','$dstName',' $emoticon', '$dateTime', '$email')";	
 	}else{
-		$sql = "INSERT INTO main_contents(content, img, tag, emoticon, date, email) VALUES('$content', 'null', '$tag', '$emoticon', '$dateTime', '$email')";
+		$sql = "INSERT INTO main_contents(content, img, emoticon, date, email) VALUES('$content', 'null', '$emoticon', '$dateTime', '$email')";
 	}
 	
 	$result = mysqli_query($conn, $sql);
@@ -50,6 +50,7 @@
 
 	$email = (string)$email;
 	$dateTime = (string)$dateTime;
+	echo $dateTime;
 
 	$sql = "SELECT no FROM main_contents WHERE date = '$dateTime' AND email = '$email'";
 	
@@ -63,10 +64,10 @@
 
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-	$contents_no = "$row[no]";
-	echo "\n$content_no\n";
+	$contents_no = $row[no];
+	echo "\n$contents_no\n";
 
-	$sql = "INSERT INTO hashtag ( content_no, tag_item ) VALUES ('$row[no]', '$tag')";
+	$sql = "INSERT INTO hashtag ( content_no, tag_item ) VALUES ('$contents_no', '$tag')";
 
 	$result = mysqli_query($conn, $sql);
 

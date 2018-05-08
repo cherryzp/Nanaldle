@@ -107,10 +107,10 @@ public class FeedFragment extends Fragment {
                 }
                 item.setContent(jsonObject.getString("content"));
                 item.setTag(jsonObject.getString("tag"));
+                item.setLikeCount(jsonObject.getString("like_count"));
                 items.add(item);
 
             }
-
             recyclerViewAdapter.notifyDataSetChanged();
 
         } catch (JSONException e) {

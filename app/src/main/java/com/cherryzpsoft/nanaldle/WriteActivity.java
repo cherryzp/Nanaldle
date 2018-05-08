@@ -234,7 +234,12 @@ public class WriteActivity extends AppCompatActivity {
     View.OnClickListener btnCancelListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            new AlertDialog.Builder(WriteActivity.this).setMessage("작성을 취소하시겠습니까?").setPositiveButton("예", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            }).setNegativeButton("아니오", null).create().show();
         }
     };
 
@@ -250,7 +255,6 @@ public class WriteActivity extends AppCompatActivity {
                         selectedImg.setImageURI(uri);
                         selectedImg.setVisibility(View.VISIBLE);
                         imgPath = getRealPathFromUri(uri);
-
                     }
                 }
                 break;

@@ -12,6 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
 public class DetailContentActivity extends AppCompatActivity {
@@ -53,11 +58,10 @@ public class DetailContentActivity extends AppCompatActivity {
                 case R.id.btn_like:
                     if(isChecked){
                         //선택됨
-                        new AlertDialog.Builder(DetailContentActivity.this).setMessage("선택됨").setPositiveButton("예", null).create().show();
+                        insertLike();
                     }else{
                         //선택되지 않음
-                        new AlertDialog.Builder(DetailContentActivity.this).setMessage("노놉").setPositiveButton("예", null).create().show();
-
+                        deleteLike();
                     }
 
                     break;
@@ -80,7 +84,7 @@ public class DetailContentActivity extends AppCompatActivity {
         tvDate.setText(intent.getStringExtra("date"));
         ivEmoticon.setImageResource(R.drawable.emoticon_01+Integer.parseInt(intent.getStringExtra("emoticon")));
         tvContent.setText(intent.getStringExtra("tv_content"));
-        tvTag.setText(intent.getStringExtra("tag"));
+        tvTag.setText(intent.getStringExtra("like_count") + "좋아요   #" + intent.getStringExtra("tag"));
 
         if(intent.getStringExtra("img_content")!=null){
             Glide.with(this).load(intent.getStringExtra("img_content")).into(ivContent);
@@ -91,6 +95,52 @@ public class DetailContentActivity extends AppCompatActivity {
             ivContent.setTransitionName("IMG");
         }
 
+    }
+
+    public void insertLike(){
+
+        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/likeCheckDB.php";
+
+        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        multiPartRequest.addStringParam("date", tvDate.getText().toString());
+        multiPartRequest.addStringParam("email", getSharedPreferences("LoginData", MODE_PRIVATE).getString("email", "null"));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(DetailContentActivity.this);
+        requestQueue.add(multiPartRequest);
 
     }
+
+    public void deleteLike(){
+        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/likeUncheckDB.php";
+
+        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        multiPartRequest.addStringParam("date", tvDate.getText().toString());
+
+        RequestQueue requestQueue = Volley.newRequestQueue(DetailContentActivity.this);
+        requestQueue.add(multiPartRequest);
+
+    }
+
 }
