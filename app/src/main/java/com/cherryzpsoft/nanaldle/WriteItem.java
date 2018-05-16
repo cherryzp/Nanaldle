@@ -13,7 +13,15 @@ public class WriteItem {
     private String emoticon;
     private String Date;
     private String email;
-    private boolean like;
+    private boolean isLiked;
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
 
     public String getLikeCount() {
         return likeCount;
@@ -24,14 +32,6 @@ public class WriteItem {
     }
 
     private String likeCount;
-
-    public boolean isLike() {
-        return like;
-    }
-
-    public void setLike(boolean like) {
-        this.like = like;
-    }
 
     public String getContent() {
         return Content;

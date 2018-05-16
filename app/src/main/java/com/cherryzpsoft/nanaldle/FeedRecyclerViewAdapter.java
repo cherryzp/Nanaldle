@@ -53,6 +53,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         VH vh = (VH) holder;
 
         WriteItem item = items.get(position);
+        vh.likeBtn.setChecked(item.isLiked());
         vh.tvDate.setText(item.getDate());
         vh.ivEmoticon.setImageResource(R.drawable.emoticon_01+Integer.parseInt(item.getEmoticon()));
         if(item.getImg()!=null){
@@ -63,7 +64,6 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         }
         vh.tvContent.setText(item.getContent());
         if(item.getTag()!=null) vh.tvTag.setText("#"+item.getTag());
-
     }
 
     @Override
@@ -90,12 +90,16 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             tvTag = itemView.findViewById(R.id.text_tag_feed);
 
             likeBtn = itemView.findViewById(R.id.btn_like);
-            likeBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            likeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    switch (buttonView.getId()){
+                public void onClick(View v) {
+
+                    ToggleButton tb = v.findViewById(R.id.btn_like);
+
+                    switch (v.getId()){
                         case R.id.btn_like:
-                            if(isChecked){
+                            if(tb.isChecked()){
 
                                 String serverUrl = "http://win9101.dothome.co.kr/nanaldle/likeCheckDB.php";
 

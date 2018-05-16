@@ -1,6 +1,7 @@
 package com.cherryzpsoft.nanaldle;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,8 +36,6 @@ public class FeedFragment extends Fragment {
     RecyclerView recyclerView;
     FeedRecyclerViewAdapter recyclerViewAdapter;
 
-    ImageView iv;
-
     String jsonConents=null;
 
     @Nullable
@@ -52,19 +51,14 @@ public class FeedFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        loadFeedContents();
-
-        iv = view.findViewById(R.id.iv);
-        iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-               loadFeedContents();
-
-            }
-        });
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        items.clear();
+        loadFeedContents();
     }
 
     public void loadFeedContents(){
@@ -84,6 +78,8 @@ public class FeedFragment extends Fragment {
 
             }
         });
+
+        multiPartRequest.addStringParam("email", getActivity().getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "로그인 정보 없음"));
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(multiPartRequest);
@@ -106,6 +102,7 @@ public class FeedFragment extends Fragment {
                 item.setContent(jsonObject.getString("content"));
                 if(!jsonObject.getString("tag").toString().equals("null")) item.setTag(jsonObject.getString("tag"));
                 item.setLikeCount(jsonObject.getString("like_count"));
+                item.setLiked(jsonObject.getString("isliked").equals("0") ? false : true);
                 items.add(item);
 
             }

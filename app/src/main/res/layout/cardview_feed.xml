@@ -51,12 +51,7 @@
             android:layout_marginBottom="80dp"
             android:layout_marginHorizontal="32dp"
             android:textAlignment="center"
-            android:text="아이콘 컬러를 #424242로 지정해주고 싶은데,
-        뭐 내용만 보면 전부
-        안 background 내용이라
-        어떻게 해야 할지 모르겠네요.
-
-        한번만 알려주시면 감사하겠습니다."
+            android:text="룰루랄라"
             android:textColor="@color/color_black"
             android:textSize="16dp"
             android:layout_below="@id/img_content_feed"
