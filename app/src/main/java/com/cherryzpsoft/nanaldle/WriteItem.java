@@ -1,10 +1,5 @@
 package com.cherryzpsoft.nanaldle;
 
-import android.net.Uri;
-
-import java.net.URI;
-import java.net.URL;
-
 public class WriteItem {
 
     private String Content;
@@ -13,6 +8,7 @@ public class WriteItem {
     private String emoticon;
     private String Date;
     private String email;
+    private String likeCount;
     private boolean isLiked;
 
     public boolean isLiked() {
@@ -30,8 +26,6 @@ public class WriteItem {
     public void setLikeCount(String likeCount) {
         this.likeCount = likeCount;
     }
-
-    private String likeCount;
 
     public String getContent() {
         return Content;

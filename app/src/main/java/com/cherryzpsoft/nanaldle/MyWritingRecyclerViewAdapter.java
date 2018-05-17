@@ -79,11 +79,9 @@ public class MyWritingRecyclerViewAdapter extends RecyclerView.Adapter {
                     Intent intent = new Intent(context, DetailContentActivity.class);
 
                     intent.putExtra("date", items.get(getLayoutPosition()).getDate());
-                    intent.putExtra("emoticon", items.get(getLayoutPosition()).getEmoticon());
-                    intent.putExtra("img_content", items.get(getLayoutPosition()).getImg());
-                    intent.putExtra("tv_content", items.get(getLayoutPosition()).getContent());
-                    if(items.get(getLayoutPosition()).getTag()!=null) intent.putExtra("tag", items.get(getLayoutPosition()).getTag());
-                    intent.putExtra("like_count", items.get(getLayoutPosition()).getLikeCount());
+
+                    context.startActivity(intent);
+
                 }
             });
 

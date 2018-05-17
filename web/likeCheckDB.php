@@ -14,8 +14,6 @@
 	$sql = "SELECT no FROM main_contents WHERE date='$dateTime'";
 	$result = mysqli_query($conn, $sql);
 
-	echo "$dateTime";
-
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 	$contents_no = $row[no];
 
@@ -24,11 +22,11 @@
 	$sql = "INSERT INTO contents_like(content_no, email, like_date) VALUES ('$contents_no', '$email', '$like_date')";
 	$result = mysqli_query($conn, $sql);
 
-	if($result){
-		echo "insert";
-	} else {
-		echo "fail";
-	}
+	$sql = "SELECT COUNT(m.no=l.content_no) like_count FROM main_contents m LEFT OUTER JOIN contents_like l ON m.no=l.content_no WHERE m.date='$dateTime'";
+	$result = mysqli_query($conn, $sql);
+	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+	echo "{\"like_count\":\"$row[like_count]\"}";
 
 	mysqli_close($conn);
 

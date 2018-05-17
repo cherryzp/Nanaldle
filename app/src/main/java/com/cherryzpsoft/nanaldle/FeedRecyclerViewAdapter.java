@@ -26,6 +26,9 @@ import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
@@ -55,15 +58,21 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         WriteItem item = items.get(position);
         vh.likeBtn.setChecked(item.isLiked());
         vh.tvDate.setText(item.getDate());
-        vh.ivEmoticon.setImageResource(R.drawable.emoticon_01+Integer.parseInt(item.getEmoticon()));
-        if(item.getImg()!=null){
+        vh.ivEmoticon.setImageResource(R.drawable.emoticon_01 + Integer.parseInt(item.getEmoticon()));
+        vh.tvLike.setText(item.getLikeCount() + " 좋아요");
+        if (item.getImg() != null) {
             Glide.with(context).load(item.getImg()).into(vh.ivContent);
             vh.ivContent.setVisibility(View.VISIBLE);
         } else {
             vh.ivContent.setVisibility(View.GONE);
         }
         vh.tvContent.setText(item.getContent());
-        if(item.getTag()!=null) vh.tvTag.setText("#"+item.getTag());
+        if (item.getTag() != null) {
+            vh.tvTag.setText("#" + item.getTag());
+            vh.tvTag.setVisibility(View.VISIBLE);
+        } else {
+            vh.tvTag.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -78,6 +87,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         ImageView ivContent;
         TextView tvContent;
         TextView tvTag;
+        TextView tvLike;
         ToggleButton likeBtn;
 
         public VH(View itemView) {
@@ -88,6 +98,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             ivContent = itemView.findViewById(R.id.img_content_feed);
             tvContent = itemView.findViewById(R.id.text_content_feed);
             tvTag = itemView.findViewById(R.id.text_tag_feed);
+            tvLike = itemView.findViewById(R.id.text_like_feed);
 
             likeBtn = itemView.findViewById(R.id.btn_like);
 
@@ -97,16 +108,22 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
 
                     ToggleButton tb = v.findViewById(R.id.btn_like);
 
-                    switch (v.getId()){
+                    switch (v.getId()) {
                         case R.id.btn_like:
-                            if(tb.isChecked()){
+                            if (tb.isChecked()) {
 
                                 String serverUrl = "http://win9101.dothome.co.kr/nanaldle/likeCheckDB.php";
 
                                 SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        new AlertDialog.Builder(context).setMessage(response).setPositiveButton("예", null).create().show();
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response);
+                                            tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+//                                        new AlertDialog.Builder(context).setMessage(response).setPositiveButton("예", null).create().show();
                                     }
                                 }, new Response.ErrorListener() {
                                     @Override
@@ -116,7 +133,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                                 });
 
                                 multiPartRequest.addStringParam("date", items.get(getLayoutPosition()).getDate());
-                                multiPartRequest.addStringParam("email", context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null") );
+                                multiPartRequest.addStringParam("email", context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null"));
 
                                 RequestQueue requestQueue = Volley.newRequestQueue(context);
                                 requestQueue.add(multiPartRequest);
@@ -128,7 +145,13 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                                 SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        new AlertDialog.Builder(context).setMessage(response).setPositiveButton("예", null).create().show();
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(response);
+                                            tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+//                                        new AlertDialog.Builder(context).setMessage(response).setPositiveButton("예", null).create().show();
                                     }
                                 }, new Response.ErrorListener() {
                                     @Override
@@ -138,6 +161,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                                 });
 
                                 multiPartRequest.addStringParam("date", items.get(getLayoutPosition()).getDate());
+                                multiPartRequest.addStringParam("email", context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null"));
 
                                 RequestQueue requestQueue = Volley.newRequestQueue(context);
                                 requestQueue.add(multiPartRequest);
@@ -156,14 +180,9 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                     Intent intent = new Intent(context, DetailContentActivity.class);
 
                     intent.putExtra("date", items.get(getLayoutPosition()).getDate());
-                    intent.putExtra("emoticon", items.get(getLayoutPosition()).getEmoticon());
-                    intent.putExtra("img_content", items.get(getLayoutPosition()).getImg());
-                    intent.putExtra("tv_content", items.get(getLayoutPosition()).getContent());
-                    if(items.get(getLayoutPosition()).getTag()!=null) intent.putExtra("tag", items.get(getLayoutPosition()).getTag());
-                    intent.putExtra("like_count", items.get(getLayoutPosition()).getLikeCount());
 
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity)context, new Pair<View, String>(ivContent, "IMG"));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, new Pair<View, String>(ivContent, "IMG"));
                         context.startActivity(intent, options.toBundle());
                     } else {
                         context.startActivity(intent);

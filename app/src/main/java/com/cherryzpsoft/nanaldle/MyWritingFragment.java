@@ -59,7 +59,7 @@ public class MyWritingFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 jsonConents = response;
-                new AlertDialog.Builder(getActivity()).setMessage(response).setPositiveButton("예", null).create().show();
+//                new AlertDialog.Builder(getActivity()).setMessage(response).setPositiveButton("예", null).create().show();
                 jsonParser();
             }
         }, new Response.ErrorListener() {

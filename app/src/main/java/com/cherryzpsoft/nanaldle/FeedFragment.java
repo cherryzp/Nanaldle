@@ -107,7 +107,6 @@ public class FeedFragment extends Fragment {
 
             }
             recyclerViewAdapter.notifyDataSetChanged();
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

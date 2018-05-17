@@ -31,6 +31,7 @@ public class DetailContentActivity extends AppCompatActivity {
     ImageView ivContent;
     TextView tvContent;
     TextView tvTag;
+    TextView tvLike;
 
     ToggleButton likeBtn;
     ImageView commentsBtn;
@@ -47,25 +48,27 @@ public class DetailContentActivity extends AppCompatActivity {
         ivContent = findViewById(R.id.img_content_detail);
         tvContent = findViewById(R.id.text_content_detail);
         tvTag = findViewById(R.id.text_tag_detail);
+        tvLike = findViewById(R.id.text_like_detail);
 
         loadItem();
 
-//        setItem();
-
         likeBtn = findViewById(R.id.btn_like);
-        likeBtn.setOnCheckedChangeListener(likeChangeListener);
+        likeBtn.setOnClickListener(likeClickListener);
 
         commentsBtn = findViewById(R.id.btn_comments);
         commentsBtn.setOnClickListener(commentsListener);
     }
 
-    CompoundButton.OnCheckedChangeListener likeChangeListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    View.OnClickListener likeClickListener = new View.OnClickListener() {
 
-            switch (buttonView.getId()) {
+        @Override
+        public void onClick(View v) {
+
+            ToggleButton likeTb = v.findViewById(R.id.btn_like);
+
+            switch (v.getId()) {
                 case R.id.btn_like:
-                    if (isChecked) {
+                    if (likeTb.isChecked()) {
                         //선택됨
                         insertLike();
                     } else {
@@ -75,7 +78,6 @@ public class DetailContentActivity extends AppCompatActivity {
 
                     break;
             }
-
         }
     };
 
@@ -86,31 +88,6 @@ public class DetailContentActivity extends AppCompatActivity {
         }
     };
 
-    public void setItem() {
-
-        Intent intent = getIntent();
-
-        tvDate.setText(intent.getStringExtra("date"));
-        ivEmoticon.setImageResource(R.drawable.emoticon_01 + Integer.parseInt(intent.getStringExtra("emoticon")));
-        tvContent.setText(intent.getStringExtra("tv_content"));
-        if (intent.getStringExtra("tag") == null) {
-            tvTag.setText(intent.getStringExtra("like_count") + "좋아요");
-        } else {
-            tvTag.setText(intent.getStringExtra("like_count") + "좋아요   #" + intent.getStringExtra("tag"));
-        }
-
-
-        if (intent.getStringExtra("img_content") != null) {
-            Glide.with(this).load(intent.getStringExtra("img_content")).into(ivContent);
-            ivContent.setVisibility(View.VISIBLE);
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ivContent.setTransitionName("IMG");
-        }
-
-    }
-
     public void insertLike() {
 
         String serverUrl = "http://win9101.dothome.co.kr/nanaldle/likeCheckDB.php";
@@ -118,7 +95,14 @@ public class DetailContentActivity extends AppCompatActivity {
         SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+//                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -141,7 +125,13 @@ public class DetailContentActivity extends AppCompatActivity {
         SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+//                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).create().show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -151,6 +141,7 @@ public class DetailContentActivity extends AppCompatActivity {
         });
 
         multiPartRequest.addStringParam("date", tvDate.getText().toString());
+        multiPartRequest.addStringParam("email", getSharedPreferences("LoginData", MODE_PRIVATE).getString("email", "null"));
 
         RequestQueue requestQueue = Volley.newRequestQueue(DetailContentActivity.this);
         requestQueue.add(multiPartRequest);
@@ -176,6 +167,7 @@ public class DetailContentActivity extends AppCompatActivity {
         });
 
         multiPartRequest.addStringParam("date", getIntent().getStringExtra("date"));
+        multiPartRequest.addStringParam("email", getSharedPreferences("LoginData", MODE_PRIVATE).getString("email", "로그인 정보 없음"));
 
         RequestQueue requestQueue = Volley.newRequestQueue(DetailContentActivity.this);
         requestQueue.add(multiPartRequest);
@@ -190,6 +182,8 @@ public class DetailContentActivity extends AppCompatActivity {
             tvDate.setText(jsonObject.getString("date"));
             ivEmoticon.setImageResource(R.drawable.emoticon_01 + Integer.parseInt(jsonObject.getString("emoticon")));
             tvContent.setText(jsonObject.getString("content"));
+            tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
+            likeBtn.setChecked(jsonObject.getString("is_liked").equals("0") ? false : true);
 
             if (!jsonObject.getString("img").toString().equals("null")) {
                 String img = "http://win9101.dothome.co.kr/nanaldle/" + jsonObject.getString("img");
@@ -200,14 +194,16 @@ public class DetailContentActivity extends AppCompatActivity {
             }
 
             if (!jsonObject.getString("tag").toString().equals("null")) {
-                tvTag.setText(jsonObject.getString("like_count") + "좋아요   #" + jsonObject.getString("tag"));
+                tvTag.setText("#"+jsonObject.getString("tag"));
+                tvTag.setVisibility(View.VISIBLE);
             } else {
-                tvTag.setText(jsonObject.getString("like_count") + "좋아요");
+                tvTag.setVisibility(View.GONE);
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 ivContent.setTransitionName("IMG");
             }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
