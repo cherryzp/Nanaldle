@@ -88,6 +88,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         TextView tvContent;
         TextView tvTag;
         TextView tvLike;
+        ImageView commentsBtn;
         ToggleButton likeBtn;
 
         public VH(View itemView) {
@@ -99,8 +100,17 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             tvContent = itemView.findViewById(R.id.text_content_feed);
             tvTag = itemView.findViewById(R.id.text_tag_feed);
             tvLike = itemView.findViewById(R.id.text_like_feed);
-
+            commentsBtn = itemView.findViewById(R.id.btn_comments);
             likeBtn = itemView.findViewById(R.id.btn_like);
+
+            commentsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CommentsActivity.class);
+
+                    context.startActivity(intent);
+                }
+            });
 
             likeBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

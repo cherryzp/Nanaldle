@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:paddingVertical="8dp">
+
+    <TextView
+        android:id="@+id/black_point"
+        android:layout_width="8dp"
+        android:layout_height="4dp"
+        android:layout_centerVertical="true"
+        android:background="@color/color_black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="아무말이나 작성 이거슨 댓글임"
+        android:layout_marginHorizontal="8dp"
+        android:layout_toRightOf="@id/black_point"
+        android:textColor="@color/color_black"/>
+
+</RelativeLayout>
