@@ -4,6 +4,7 @@
 
 	$content = $_POST['content'];
 	$tag = $_POST['tag'];
+	
 	$emoticon = $_POST['emoticon'];
 	$email = $_POST['email'];
 

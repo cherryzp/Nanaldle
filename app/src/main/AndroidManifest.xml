@@ -48,7 +48,9 @@
             android:name=".WriteActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".DetailContentActivity" />
-        <activity android:name=".CommentsActivity"></activity>
+        <activity
+            android:name=".CommentsActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>

@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".CommentsActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_comments"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_comments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_alignParentBottom="true"
@@ -21,23 +29,26 @@
         android:layout_marginHorizontal="8dp">
 
         <EditText
+            android:id="@+id/edit_comments"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/color_black"
             android:textSize="12sp"
-            android:text="아무말이나 해본다"
+            android:inputType="text"
             android:hint="댓글을 작성하세요"/>
 
         <TextView
+            android:id="@+id/add_comments_btn"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:text="작성"
             android:textColor="@color/color_black"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:clickable="true"/>
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

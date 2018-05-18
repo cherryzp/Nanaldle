@@ -107,6 +107,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, CommentsActivity.class);
+                    intent.putExtra("date", items.get(getLayoutPosition()).getDate());
 
                     context.startActivity(intent);
                 }
@@ -188,7 +189,6 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(context, DetailContentActivity.class);
-
                     intent.putExtra("date", items.get(getLayoutPosition()).getDate());
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
