@@ -6,16 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter {
+public class MyCommentsRecyclerViewAdapter extends RecyclerView.Adapter {
 
     Context context;
-    ArrayList<String> items;
+    ArrayList<WriteItem> items;
 
-    public CommentsRecyclerViewAdapter(Context context, ArrayList<String> items) {
+    public MyCommentsRecyclerViewAdapter(Context context, ArrayList<WriteItem> items) {
         this.context = context;
         this.items = items;
     }
@@ -23,7 +22,6 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(context).inflate(R.layout.cardview_comments, parent, false);
         RecyclerView.ViewHolder holder = new VH(view);
 
@@ -32,9 +30,6 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        VH vh = (VH) holder;
-
-        vh.tvComments.setText(items.get(position));
 
     }
 
@@ -44,12 +39,10 @@ public class CommentsRecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
     class VH extends RecyclerView.ViewHolder{
-
-        TextView tvComments;
-
         public VH(View itemView) {
             super(itemView);
-            tvComments = itemView.findViewById(R.id.text_comments);
+
         }
     }
+
 }

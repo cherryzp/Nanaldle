@@ -43,7 +43,8 @@
         <activity
             android:name=".PasswordActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".WriteActivity"
             android:windowSoftInputMode="adjustResize" />

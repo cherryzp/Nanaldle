@@ -84,7 +84,11 @@ public class DetailContentActivity extends AppCompatActivity {
     View.OnClickListener commentsListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Intent intent = new Intent(DetailContentActivity.this, CommentsActivity.class);
 
+            intent.putExtra("date", tvDate.getText());
+            startActivity(intent);
+            overridePendingTransition(R.anim.enter_write_activity, R.anim.exit_write_activity);
         }
     };
 

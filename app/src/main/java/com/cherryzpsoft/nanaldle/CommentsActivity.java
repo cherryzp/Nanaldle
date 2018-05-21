@@ -16,6 +16,10 @@ import com.android.volley.error.VolleyError;
 import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class CommentsActivity extends AppCompatActivity {
@@ -28,6 +32,8 @@ public class CommentsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     CommentsRecyclerViewAdapter recyclerViewAdapter;
+
+    String jsonComments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +64,7 @@ public class CommentsActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     insertComments();
                 }
-            }).setPositiveButton("아니오", null).create().show();
+            }).setNegativeButton("아니오", null).create().show();
 
         }
     };
@@ -70,7 +76,10 @@ public class CommentsActivity extends AppCompatActivity {
         SimpleMultiPartRequest simpleMultiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                new AlertDialog.Builder(CommentsActivity.this).setMessage(response).create().show();
+//                new AlertDialog.Builder(CommentsActivity.this).setMessage(response).create().show();
+                editComments.setText("");
+                items.clear();
+                loadComments();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -90,11 +99,13 @@ public class CommentsActivity extends AppCompatActivity {
 
     public void loadComments(){
 
-        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/insertCommentsDB.php";
+        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/loadCommentsDB.php";
 
         SimpleMultiPartRequest simpleMultiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                jsonComments = response;
+                jsonParser();
                 new AlertDialog.Builder(CommentsActivity.this).setMessage(response).create().show();
             }
         }, new Response.ErrorListener() {
@@ -112,6 +123,19 @@ public class CommentsActivity extends AppCompatActivity {
     }
 
     public void jsonParser(){
+        try {
+            JSONArray jsonArray = new JSONArray(jsonComments);
+            JSONObject jsonObject;
+            for(int i=0; i<jsonArray.length(); i++){
+                comments = null;
+                jsonObject = jsonArray.getJSONObject(i);
+                comments = jsonObject.getString("comment");
+                items.add(comments);
+            }
+            recyclerViewAdapter.notifyDataSetChanged();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

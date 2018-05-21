@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -110,6 +111,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                     intent.putExtra("date", items.get(getLayoutPosition()).getDate());
 
                     context.startActivity(intent);
+                    ((AppCompatActivity)context).overridePendingTransition(R.anim.enter_write_activity, R.anim.exit_write_activity);
                 }
             });
 

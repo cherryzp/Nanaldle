@@ -2,22 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="2dp"
     android:background="@color/color_white">
 
     <TextView
+        android:id="@+id/black_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_black"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
         android:id="@+id/tv_contents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/black_line"
+        android:text="타이틀"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tv_comments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        android:text="타이틀"
+        android:text="댓글"
         android:textColor="@color/color_black"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="4dp"
-        android:maxLines="1"/>
-
+        android:layout_below="@id/tv_contents"
+        android:maxLines="1"
+        android:layout_marginBottom="4dp"/>
 
     <TextView
         android:id="@+id/tv_date"
@@ -25,10 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
+        android:layout_below="@id/tv_comments"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/tv_contents"
         android:text="2018/05/09 10:44:39"/>
-
-
 
 </RelativeLayout>

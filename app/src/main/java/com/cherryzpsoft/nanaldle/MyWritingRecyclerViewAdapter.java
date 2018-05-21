@@ -81,7 +81,6 @@ public class MyWritingRecyclerViewAdapter extends RecyclerView.Adapter {
                     intent.putExtra("date", items.get(getLayoutPosition()).getDate());
 
                     context.startActivity(intent);
-
                 }
             });
 
