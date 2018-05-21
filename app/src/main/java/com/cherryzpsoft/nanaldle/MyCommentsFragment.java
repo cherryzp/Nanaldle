@@ -60,7 +60,7 @@ public class MyCommentsFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 jsonContents = response;
-                new AlertDialog.Builder(getActivity()).setMessage(response).create().show();
+//                new AlertDialog.Builder(getActivity()).setMessage(response).create().show();
                 jsonParser();
             }
         }, new Response.ErrorListener() {

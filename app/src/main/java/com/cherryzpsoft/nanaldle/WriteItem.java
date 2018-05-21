@@ -10,7 +10,16 @@ public class WriteItem {
     private String email;
     private String likeCount;
     private String commentCount;
-    private boolean isLiked;
+    private boolean liked;
+    private boolean bookmarked;
+
+    public boolean isBookmarked() {
+        return bookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        bookmarked = bookmarked;
+    }
 
     public String getCommentCount() {
         return commentCount;
@@ -21,11 +30,10 @@ public class WriteItem {
     }
 
     public boolean isLiked() {
-        return isLiked;
+        return liked;
     }
 
-    public void setLiked(boolean liked) {
-        isLiked = liked;
+    public void setLiked(boolean liked) { this.liked = liked;
     }
 
     public String getLikeCount() {

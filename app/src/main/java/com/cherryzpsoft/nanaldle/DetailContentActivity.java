@@ -66,20 +66,14 @@ public class DetailContentActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            ToggleButton likeTb = v.findViewById(R.id.btn_like);
-
-            switch (v.getId()) {
-                case R.id.btn_like:
-                    if (likeTb.isChecked()) {
-                        //선택됨
-                        insertLike();
-                    } else {
-                        //선택되지 않음
-                        deleteLike();
-                    }
-
-                    break;
+            if (likeBtn.isChecked()) {
+                //선택됨
+                insertLike();
+            } else {
+                //선택되지 않음
+                deleteLike();
             }
+
         }
     };
 
@@ -189,7 +183,7 @@ public class DetailContentActivity extends AppCompatActivity {
             ivEmoticon.setImageResource(R.drawable.emoticon_01 + Integer.parseInt(jsonObject.getString("emoticon")));
             tvContent.setText(jsonObject.getString("content"));
             tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
-            tvComments.setText(jsonObject.getString("comment_count")+ " 댓글");
+            tvComments.setText(jsonObject.getString("comment_count") + " 댓글");
             likeBtn.setChecked(jsonObject.getString("is_liked").equals("0") ? false : true);
 
             if (!jsonObject.getString("img").toString().equals("null")) {
@@ -201,7 +195,7 @@ public class DetailContentActivity extends AppCompatActivity {
             }
 
             if (!jsonObject.getString("tag").toString().equals("null")) {
-                tvTag.setText("#"+jsonObject.getString("tag"));
+                tvTag.setText("#" + jsonObject.getString("tag"));
                 tvTag.setVisibility(View.VISIBLE);
             } else {
                 tvTag.setVisibility(View.GONE);

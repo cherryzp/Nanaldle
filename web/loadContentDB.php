@@ -22,6 +22,9 @@
 	$sql4 = "SELECT COUNT(m.no=c.content_no) comment_count FROM main_contents m LEFT OUTER JOIN contents_comment c ON m.no=c.content_no GROUP BY m.no ORDER BY m.no DESC";
 	$result4 = mysqli_query($conn, $sql4);
 
+	$sql5 = "SELECT m.no, COUNT(b.email = '$email') is_bookmarked FROM main_contents m LEFT OUTER JOIN contents_bookmark b ON m.no=b.content_no GROUP BY m.no ORDER BY m.no DESC";
+	$result5 = mysqli_query($conn, $sql5);
+
 	echo "[";
 
 	for($i=0; $i<$row_num; $i++){
@@ -33,10 +36,12 @@
 		$row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
 		$row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC);
 		$row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC);
+		$row5 = mysqli_fetch_array($result5, MYSQLI_ASSOC);
 
 		echo "{\"content\":\"$row[content]\", \"img\":\"$row[img]\", \"tag\":\"$row[tag_item]\", \"emoticon\":\"$row[emoticon]\", \"date\":\"$row[date]\",";
 		echo " \"isliked\":\"$row3[is_liked]\",";
 		echo " \"comment_count\":\"$row4[comment_count]\",";
+		echo " \"isbookmarked\":\"$row5[is_bookmarked]\",";
 		echo " \"like_count\":\"$row2[like_count]\"}";
 
 		if($i!=$row_num-1){

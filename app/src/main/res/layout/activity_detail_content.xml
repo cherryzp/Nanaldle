@@ -98,6 +98,16 @@
                 android:layout_marginHorizontal="4dp"
                 android:layout_toRightOf="@id/btn_like" />
 
+            <ToggleButton
+                android:id="@+id/btn_bookmark"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="4dp"
+                android:layout_toRightOf="@id/btn_comments"
+                android:textOff=""
+                android:textOn=""
+                android:background="@drawable/tb_selected_bookmark"/>
+
             <TextView
                 android:id="@+id/text_like_detail"
                 android:layout_width="wrap_content"

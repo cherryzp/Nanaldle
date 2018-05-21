@@ -104,6 +104,7 @@ public class FeedFragment extends Fragment {
                 if(!jsonObject.getString("tag").toString().equals("null")) item.setTag(jsonObject.getString("tag"));
                 item.setLikeCount(jsonObject.getString("like_count"));
                 item.setLiked(jsonObject.getString("isliked").equals("0") ? false : true);
+                item.setBookmarked(jsonObject.getString("isbookmarked").equals("0") ? false : true);
                 items.add(item);
 
             }

@@ -58,6 +58,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
 
         WriteItem item = items.get(position);
         vh.likeBtn.setChecked(item.isLiked());
+        vh.bookmarkBtn.setChecked(item.isBookmarked());
         vh.tvDate.setText(item.getDate());
         vh.ivEmoticon.setImageResource(R.drawable.emoticon_01 + Integer.parseInt(item.getEmoticon()));
         vh.tvLike.setText(item.getLikeCount() + " 좋아요");
@@ -93,6 +94,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         TextView tvComments;
         ImageView commentsBtn;
         ToggleButton likeBtn;
+        ToggleButton bookmarkBtn;
 
         public VH(View itemView) {
             super(itemView);
@@ -106,6 +108,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             commentsBtn = itemView.findViewById(R.id.btn_comments);
             likeBtn = itemView.findViewById(R.id.btn_like);
             tvComments = itemView.findViewById(R.id.text_comments_feed);
+            bookmarkBtn = itemView.findViewById(R.id.btn_bookmark);
 
             commentsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -114,7 +117,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                     intent.putExtra("date", items.get(getLayoutPosition()).getDate());
 
                     context.startActivity(intent);
-                    ((AppCompatActivity)context).overridePendingTransition(R.anim.enter_write_activity, R.anim.exit_write_activity);
+                    ((AppCompatActivity) context).overridePendingTransition(R.anim.enter_write_activity, R.anim.exit_write_activity);
                 }
             });
 
@@ -122,69 +125,111 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
 
-                    ToggleButton tb = v.findViewById(R.id.btn_like);
+                    if (likeBtn.isChecked()) {
 
-                    switch (v.getId()) {
-                        case R.id.btn_like:
-                            if (tb.isChecked()) {
+                        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/likeCheckDB.php";
 
-                                String serverUrl = "http://win9101.dothome.co.kr/nanaldle/likeCheckDB.php";
-
-                                SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(response);
-                                            tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
+                        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 //                                        new AlertDialog.Builder(context).setMessage(response).setPositiveButton("예", null).create().show();
-                                    }
-                                }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-
-                                    }
-                                });
-
-                                multiPartRequest.addStringParam("date", items.get(getLayoutPosition()).getDate());
-                                multiPartRequest.addStringParam("email", context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null"));
-
-                                RequestQueue requestQueue = Volley.newRequestQueue(context);
-                                requestQueue.add(multiPartRequest);
-
-                            } else {
-
-                                String serverUrl = "http://win9101.dothome.co.kr/nanaldle/likeUncheckDB.php";
-
-                                SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(response);
-                                            tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-//                                        new AlertDialog.Builder(context).setMessage(response).setPositiveButton("예", null).create().show();
-                                    }
-                                }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-
-                                    }
-                                });
-
-                                multiPartRequest.addStringParam("date", items.get(getLayoutPosition()).getDate());
-                                multiPartRequest.addStringParam("email", context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null"));
-
-                                RequestQueue requestQueue = Volley.newRequestQueue(context);
-                                requestQueue.add(multiPartRequest);
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
 
                             }
+                        });
 
-                            break;
+                        multiPartRequest.addStringParam("date", items.get(getLayoutPosition()).getDate());
+                        multiPartRequest.addStringParam("email", context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null"));
+
+                        RequestQueue requestQueue = Volley.newRequestQueue(context);
+                        requestQueue.add(multiPartRequest);
+
+                    } else {
+
+                        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/likeUncheckDB.php";
+
+                        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+//                                        new AlertDialog.Builder(context).setMessage(response).setPositiveButton("예", null).create().show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+
+                        multiPartRequest.addStringParam("date", items.get(getLayoutPosition()).getDate());
+                        multiPartRequest.addStringParam("email", context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null"));
+
+                        RequestQueue requestQueue = Volley.newRequestQueue(context);
+                        requestQueue.add(multiPartRequest);
+
+                    }
+
+                }
+
+            });
+
+            bookmarkBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (bookmarkBtn.isChecked()) {
+                        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/bookmarkCheckDB.php";
+
+                        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                new AlertDialog.Builder(context).setMessage(response).setPositiveButton("예", null).create().show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+
+                        multiPartRequest.addStringParam("date", items.get(getLayoutPosition()).getDate());
+                        multiPartRequest.addStringParam("email", context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null"));
+
+                        RequestQueue requestQueue = Volley.newRequestQueue(context);
+                        requestQueue.add(multiPartRequest);
+                    } else {
+                        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/bookmarkUncheckDB.php";
+
+                        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                new AlertDialog.Builder(context).setMessage(response).setPositiveButton("예", null).create().show();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+
+                        multiPartRequest.addStringParam("date", items.get(getLayoutPosition()).getDate());
+                        multiPartRequest.addStringParam("email", context.getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null"));
+
+                        RequestQueue requestQueue = Volley.newRequestQueue(context);
+                        requestQueue.add(multiPartRequest);
                     }
                 }
             });
@@ -196,12 +241,8 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                     Intent intent = new Intent(context, DetailContentActivity.class);
                     intent.putExtra("date", items.get(getLayoutPosition()).getDate());
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, new Pair<View, String>(ivContent, "IMG"));
-                        context.startActivity(intent, options.toBundle());
-                    } else {
-                        context.startActivity(intent);
-                    }
+                    context.startActivity(intent);
+
 
                 }
             });
