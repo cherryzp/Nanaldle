@@ -98,6 +98,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="좋아요"
+            android:layout_toLeftOf="@id/text_comments_feed"
+            android:layout_marginRight="16dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/text_comments_feed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="댓글"
             android:layout_alignParentRight="true"
             android:textAlignment="center"/>
 

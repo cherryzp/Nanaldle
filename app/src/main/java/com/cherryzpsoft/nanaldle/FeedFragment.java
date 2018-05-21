@@ -36,7 +36,7 @@ public class FeedFragment extends Fragment {
     RecyclerView recyclerView;
     FeedRecyclerViewAdapter recyclerViewAdapter;
 
-    String jsonConents=null;
+    String jsonContents=null;
 
     @Nullable
     @Override
@@ -68,9 +68,9 @@ public class FeedFragment extends Fragment {
         SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                jsonConents = response;
+                jsonContents = response;
                 jsonParser();
-                new AlertDialog.Builder(getActivity()).setMessage(jsonConents).setPositiveButton("예", null).create().show();
+                new AlertDialog.Builder(getActivity()).setMessage(jsonContents).setPositiveButton("예", null).create().show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -90,7 +90,7 @@ public class FeedFragment extends Fragment {
 
         try {
 
-            JSONArray jsonArray = new JSONArray(jsonConents);
+            JSONArray jsonArray = new JSONArray(jsonContents);
             JSONObject jsonObject;
             for(int i=0; i<jsonArray.length(); i++){
                 item = null;
@@ -98,6 +98,7 @@ public class FeedFragment extends Fragment {
                 jsonObject = jsonArray.getJSONObject(i);
                 item.setEmoticon(jsonObject.getString("emoticon"));
                 item.setDate(jsonObject.getString("date"));
+                item.setCommentCount(jsonObject.getString("comment_count"));
                 if(!jsonObject.getString("img").toString().equals("null")) item.setImg("http://win9101.dothome.co.kr/nanaldle/" + jsonObject.getString("img"));
                 item.setContent(jsonObject.getString("content"));
                 if(!jsonObject.getString("tag").toString().equals("null")) item.setTag(jsonObject.getString("tag"));

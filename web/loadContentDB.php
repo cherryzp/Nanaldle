@@ -19,6 +19,9 @@
 	$sql3 = "SELECT m.no, COUNT( m.no=l.content_no ) is_liked FROM main_contents m LEFT OUTER JOIN contents_like l ON m.no=l.content_no WHERE m.email = '$email' GROUP BY m.no ORDER BY m.no DESC";
 	$result3 = mysqli_query($conn, $sql3);
 
+	$sql4 = "SELECT COUNT(m.no=c.content_no) comment_count FROM main_contents m LEFT OUTER JOIN contents_comment c ON m.no=c.content_no GROUP BY m.no ORDER BY m.no DESC";
+	$result4 = mysqli_query($conn, $sql4);
+
 	echo "[";
 
 	for($i=0; $i<$row_num; $i++){
@@ -29,9 +32,11 @@
 		$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 		$row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
 		$row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC);
+		$row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC);
 
 		echo "{\"content\":\"$row[content]\", \"img\":\"$row[img]\", \"tag\":\"$row[tag_item]\", \"emoticon\":\"$row[emoticon]\", \"date\":\"$row[date]\",";
 		echo " \"isliked\":\"$row3[is_liked]\",";
+		echo " \"comment_count\":\"$row4[comment_count]\",";
 		echo " \"like_count\":\"$row2[like_count]\"}";
 
 		if($i!=$row_num-1){

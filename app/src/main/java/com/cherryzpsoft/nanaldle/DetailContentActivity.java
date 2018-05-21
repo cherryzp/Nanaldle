@@ -32,6 +32,7 @@ public class DetailContentActivity extends AppCompatActivity {
     TextView tvContent;
     TextView tvTag;
     TextView tvLike;
+    TextView tvComments;
 
     ToggleButton likeBtn;
     ImageView commentsBtn;
@@ -49,6 +50,7 @@ public class DetailContentActivity extends AppCompatActivity {
         tvContent = findViewById(R.id.text_content_detail);
         tvTag = findViewById(R.id.text_tag_detail);
         tvLike = findViewById(R.id.text_like_detail);
+        tvComments = findViewById(R.id.text_comments_detail);
 
         loadItem();
 
@@ -187,6 +189,7 @@ public class DetailContentActivity extends AppCompatActivity {
             ivEmoticon.setImageResource(R.drawable.emoticon_01 + Integer.parseInt(jsonObject.getString("emoticon")));
             tvContent.setText(jsonObject.getString("content"));
             tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
+            tvComments.setText(jsonObject.getString("comment_count")+ " 댓글");
             likeBtn.setChecked(jsonObject.getString("is_liked").equals("0") ? false : true);
 
             if (!jsonObject.getString("img").toString().equals("null")) {

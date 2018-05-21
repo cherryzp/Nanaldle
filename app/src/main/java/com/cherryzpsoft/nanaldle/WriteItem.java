@@ -9,7 +9,16 @@ public class WriteItem {
     private String Date;
     private String email;
     private String likeCount;
+    private String commentCount;
     private boolean isLiked;
+
+    public String getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(String commentCount) {
+        this.commentCount = commentCount;
+    }
 
     public boolean isLiked() {
         return isLiked;

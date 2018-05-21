@@ -61,6 +61,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         vh.tvDate.setText(item.getDate());
         vh.ivEmoticon.setImageResource(R.drawable.emoticon_01 + Integer.parseInt(item.getEmoticon()));
         vh.tvLike.setText(item.getLikeCount() + " 좋아요");
+        vh.tvComments.setText(item.getCommentCount() + " 댓글");
         if (item.getImg() != null) {
             Glide.with(context).load(item.getImg()).into(vh.ivContent);
             vh.ivContent.setVisibility(View.VISIBLE);
@@ -89,6 +90,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         TextView tvContent;
         TextView tvTag;
         TextView tvLike;
+        TextView tvComments;
         ImageView commentsBtn;
         ToggleButton likeBtn;
 
@@ -103,6 +105,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             tvLike = itemView.findViewById(R.id.text_like_feed);
             commentsBtn = itemView.findViewById(R.id.btn_comments);
             likeBtn = itemView.findViewById(R.id.btn_like);
+            tvComments = itemView.findViewById(R.id.text_comments_feed);
 
             commentsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

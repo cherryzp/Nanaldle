@@ -21,7 +21,11 @@
 	$result3 = mysqli_query($conn, $sql3);
 	$row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC);
 
-	echo "{\"content\":\"$row[content]\", \"img\":\"$row[img]\", \"emoticon\":\"$row[emoticon]\", \"date\":\"$date\", \"like_count\":\"$row[like_count]\", \"tag\":\"$row2[tag_item]\", \"is_liked\":\"$row3[is_liked]\"}";
+	$sql4 = "SELECT COUNT(m.no=c.content_no) comment_count FROM main_contents m LEFT OUTER JOIN contents_comment c ON m.no=c.content_no WHERE m.date='$date'";
+	$result4 = mysqli_query($conn, $sql4);
+	$row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC);
+
+	echo "{\"content\":\"$row[content]\", \"img\":\"$row[img]\", \"emoticon\":\"$row[emoticon]\", \"date\":\"$date\", \"like_count\":\"$row[like_count]\", \"tag\":\"$row2[tag_item]\", \"is_liked\":\"$row3[is_liked]\", \"comment_count\":\"$row4[comment_count]\"}";
 
 	mysqli_close($conn);
 
