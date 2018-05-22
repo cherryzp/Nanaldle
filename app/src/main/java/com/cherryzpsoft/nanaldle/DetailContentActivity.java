@@ -1,5 +1,6 @@
 package com.cherryzpsoft.nanaldle;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +36,7 @@ public class DetailContentActivity extends AppCompatActivity {
     TextView tvComments;
 
     ToggleButton likeBtn;
+    ToggleButton bookmarkBtn;
     ImageView commentsBtn;
 
     String jsonConents;
@@ -59,6 +61,9 @@ public class DetailContentActivity extends AppCompatActivity {
 
         commentsBtn = findViewById(R.id.btn_comments);
         commentsBtn.setOnClickListener(commentsListener);
+
+        bookmarkBtn = findViewById(R.id.btn_bookmark);
+        bookmarkBtn.setOnClickListener(bookmarkClickListener);
     }
 
     View.OnClickListener likeClickListener = new View.OnClickListener() {
@@ -85,6 +90,19 @@ public class DetailContentActivity extends AppCompatActivity {
             intent.putExtra("date", tvDate.getText());
             startActivity(intent);
             overridePendingTransition(R.anim.enter_write_activity, R.anim.exit_write_activity);
+        }
+    };
+
+    View.OnClickListener bookmarkClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(bookmarkBtn.isChecked()){
+                //선택됨
+                insertBookmark();
+            }else{
+                //선택되지 않음
+                deleteBookmark();
+            }
         }
     };
 
@@ -148,6 +166,50 @@ public class DetailContentActivity extends AppCompatActivity {
 
     }
 
+    public void insertBookmark(){
+        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/bookmarkCheckDB.php";
+
+        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        multiPartRequest.addStringParam("date", getIntent().getStringExtra("date"));
+        multiPartRequest.addStringParam("email", getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null"));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(DetailContentActivity.this);
+        requestQueue.add(multiPartRequest);
+    }
+
+    public void deleteBookmark(){
+        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/bookmarkUncheckDB.php";
+
+        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        multiPartRequest.addStringParam("date", getIntent().getStringExtra("date"));
+        multiPartRequest.addStringParam("email", getSharedPreferences("LoginData", Context.MODE_PRIVATE).getString("email", "null"));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(DetailContentActivity.this);
+        requestQueue.add(multiPartRequest);
+    }
+
     public void loadItem() {
 
         String serverUrl = "http://win9101.dothome.co.kr/nanaldle/loadDetailDB.php";
@@ -185,6 +247,7 @@ public class DetailContentActivity extends AppCompatActivity {
             tvLike.setText(jsonObject.getString("like_count") + " 좋아요");
             tvComments.setText(jsonObject.getString("comment_count") + " 댓글");
             likeBtn.setChecked(jsonObject.getString("is_liked").equals("0") ? false : true);
+            bookmarkBtn.setChecked(jsonObject.getString("isbookmarked").equals("0") ? false : true);
 
             if (!jsonObject.getString("img").toString().equals("null")) {
                 String img = "http://win9101.dothome.co.kr/nanaldle/" + jsonObject.getString("img");

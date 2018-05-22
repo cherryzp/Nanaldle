@@ -25,7 +25,11 @@
 	$result4 = mysqli_query($conn, $sql4);
 	$row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC);
 
-	echo "{\"content\":\"$row[content]\", \"img\":\"$row[img]\", \"emoticon\":\"$row[emoticon]\", \"date\":\"$date\", \"like_count\":\"$row[like_count]\", \"tag\":\"$row2[tag_item]\", \"is_liked\":\"$row3[is_liked]\", \"comment_count\":\"$row4[comment_count]\"}";
+	$sql5 = "SELECT m.no, COUNT(b.email = '$email') is_bookmarked FROM main_contents m LEFT OUTER JOIN contents_bookmark b ON m.no=b.content_no WHERE m.date='$date'";
+	$result5 = mysqli_query($conn, $sql5);
+	$row5 = mysqli_fetch_array($result5, MYSQLI_ASSOC);
+
+	echo "{\"content\":\"$row[content]\", \"img\":\"$row[img]\", \"emoticon\":\"$row[emoticon]\", \"date\":\"$date\", \"like_count\":\"$row[like_count]\", \"tag\":\"$row2[tag_item]\", \"is_liked\":\"$row3[is_liked]\", \"comment_count\":\"$row4[comment_count]\", \"isbookmarked\":\"$row5[is_bookmarked]\"}";
 
 	mysqli_close($conn);
 
