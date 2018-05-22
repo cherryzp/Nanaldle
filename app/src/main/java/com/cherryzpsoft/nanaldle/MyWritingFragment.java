@@ -32,7 +32,7 @@ public class MyWritingFragment extends Fragment {
     RecyclerView recyclerView;
     MyWritingRecyclerViewAdapter recyclerViewAdapter;
 
-    String jsonConents;
+    String jsonContents;
 
     @Nullable
     @Override
@@ -58,7 +58,7 @@ public class MyWritingFragment extends Fragment {
         SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                jsonConents = response;
+                jsonContents = response;
 //                new AlertDialog.Builder(getActivity()).setMessage(response).setPositiveButton("예", null).create().show();
                 jsonParser();
             }
@@ -80,7 +80,7 @@ public class MyWritingFragment extends Fragment {
 
         try {
 
-            JSONArray jsonArray = new JSONArray(jsonConents);
+            JSONArray jsonArray = new JSONArray(jsonContents);
             JSONObject jsonObject;
             for(int i=0; i<jsonArray.length(); i++){
                 item = null;

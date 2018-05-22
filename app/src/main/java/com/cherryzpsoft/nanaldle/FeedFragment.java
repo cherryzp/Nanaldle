@@ -70,7 +70,7 @@ public class FeedFragment extends Fragment {
             public void onResponse(String response) {
                 jsonContents = response;
                 jsonParser();
-                new AlertDialog.Builder(getActivity()).setMessage(jsonContents).setPositiveButton("예", null).create().show();
+//                new AlertDialog.Builder(getActivity()).setMessage(jsonContents).setPositiveButton("예", null).create().show();
             }
         }, new Response.ErrorListener() {
             @Override

@@ -32,5 +32,3 @@
 	mysqli_close($conn);
 
  ?>
-
- <!-- SELECT m.no, COUNT(b.email = 'win9101@nate.com') bookmark_check FROM main_contents m LEFT OUTER JOIN contents_bookmark b ON m.no=b.content_no GROUP BY m.no -->

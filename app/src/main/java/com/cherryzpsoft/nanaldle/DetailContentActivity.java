@@ -54,8 +54,6 @@ public class DetailContentActivity extends AppCompatActivity {
         tvLike = findViewById(R.id.text_like_detail);
         tvComments = findViewById(R.id.text_comments_detail);
 
-        loadItem();
-
         likeBtn = findViewById(R.id.btn_like);
         likeBtn.setOnClickListener(likeClickListener);
 
@@ -64,6 +62,12 @@ public class DetailContentActivity extends AppCompatActivity {
 
         bookmarkBtn = findViewById(R.id.btn_bookmark);
         bookmarkBtn.setOnClickListener(bookmarkClickListener);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadItem();
     }
 
     View.OnClickListener likeClickListener = new View.OnClickListener() {
@@ -172,7 +176,7 @@ public class DetailContentActivity extends AppCompatActivity {
         SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
+//                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -194,7 +198,7 @@ public class DetailContentActivity extends AppCompatActivity {
         SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(serverUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
+//                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -219,7 +223,7 @@ public class DetailContentActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 jsonConents = response;
                 jsonParser();
-                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
+//                new AlertDialog.Builder(DetailContentActivity.this).setMessage(response).setPositiveButton("예", null).create().show();
             }
         }, new Response.ErrorListener() {
             @Override

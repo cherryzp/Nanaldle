@@ -2,10 +2,10 @@ package com.cherryzpsoft.nanaldle;
 
 public class MyCommentsItem {
 
-    String comments;
-    String contents;
-    String cDate;
-    String mDate;
+    private String comments;
+    private String contents;
+    private String cDate;
+    private String mDate;
 
     public String getComments() {
         return comments;
