@@ -1,6 +1,7 @@
 package com.cherryzpsoft.nanaldle;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,6 +43,8 @@ public class SearchFragment extends Fragment {
     RecyclerView recyclerView;
     SearchRecyclerViewAdapter recyclerViewAdapter;
 
+    InputMethodManager inputMethodManager;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,11 +57,14 @@ public class SearchFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
+        inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
         editSearch = view.findViewById(R.id.edit_search);
         editSearch.setOnEditorActionListener(editorActionListener);
 
         searchBtn = view.findViewById(R.id.btn_search);
         searchBtn.setOnClickListener(searchClickListener);
+
         return view;
     }
 
@@ -66,6 +73,7 @@ public class SearchFragment extends Fragment {
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if(!editSearch.getText().toString().equals("")){
                 items.clear();
+                inputMethodManager.hideSoftInputFromWindow(editSearch.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
                 searchTagItem();
             }else {
                 Toast.makeText(getActivity(), "검색어를 입력해주세요", Toast.LENGTH_SHORT).show();
@@ -80,6 +88,7 @@ public class SearchFragment extends Fragment {
         public void onClick(View v) {
             if(!editSearch.getText().toString().equals("")){
                 items.clear();
+                inputMethodManager.hideSoftInputFromWindow(editSearch.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
                 searchTagItem();
             }else {
                 Toast.makeText(getActivity(), "검색어를 입력해주세요", Toast.LENGTH_SHORT).show();

@@ -8,7 +8,7 @@
 
 	mysqli_query($conn, "set names utf8");
 
-	$sql = "SELECT DISTINCT m.content, m.img, t.tag_item, m.emoticon, date FROM main_contents AS m LEFT OUTER JOIN hashtag AS t ON m.no=t.content_no ORDER BY m.no DESC";
+	$sql = "SELECT DISTINCT m.content, m.img, t.tag_item, m.emoticon, m.date FROM main_contents AS m LEFT OUTER JOIN hashtag AS t ON m.no=t.content_no ORDER BY m.no DESC";
 	$result = mysqli_query($conn, $sql);
 
 	$row_num = mysqli_num_rows($result);

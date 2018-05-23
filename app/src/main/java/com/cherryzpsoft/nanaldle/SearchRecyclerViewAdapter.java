@@ -1,6 +1,7 @@
 package com.cherryzpsoft.nanaldle;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,6 +56,15 @@ public class SearchRecyclerViewAdapter extends RecyclerView.Adapter {
             tvTagItem = itemView.findViewById(R.id.tv_tag_item);
             tvTagCount = itemView.findViewById(R.id.tv_tag_count);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, DetailTagSearchActivity.class);
+
+                    intent.putExtra("tag", items.get(getLayoutPosition()).getTag());
+                    context.startActivity(intent);
+                }
+            });
 
         }
     }
