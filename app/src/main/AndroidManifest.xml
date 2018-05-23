@@ -43,15 +43,17 @@
         <activity
             android:name=".PasswordActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".WriteActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".DetailContentActivity" />
         <activity
             android:name=".CommentsActivity"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".DetailTagSearchActivity"></activity>
     </application>
 
 </manifest>
