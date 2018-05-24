@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,6 +25,8 @@ public class DetailTagSearchActivity extends AppCompatActivity {
     ArrayList<WriteItem> items = new ArrayList<>();
     WriteItem item;
 
+    TextView tvToolbarTitle;
+
     String jsonContents;
 
     RecyclerView recyclerView;
@@ -33,11 +37,20 @@ public class DetailTagSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_tag_search);
 
+        tvToolbarTitle = findViewById(R.id.tv_toolbar_title);
+        tvToolbarTitle.setText("#"+getIntent().getStringExtra("tag"));
+
         recyclerView = findViewById(R.id.recyclerview_detail_tag_item);
         recyclerViewAdapter = new DetailTagSearchRecyclerViewAdapter(this, items);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        items.clear();
         loadItem();
     }
 
@@ -49,7 +62,7 @@ public class DetailTagSearchActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 jsonContents = response;
                 jsonParser();
-                new AlertDialog.Builder(DetailTagSearchActivity.this).setMessage(response).create().show();
+//                new AlertDialog.Builder(DetailTagSearchActivity.this).setMessage(response).create().show();
             }
         }, new Response.ErrorListener() {
             @Override

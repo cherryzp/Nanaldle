@@ -108,22 +108,31 @@
                 android:textOn=""
                 android:background="@drawable/tb_selected_bookmark"/>
 
-            <TextView
-                android:id="@+id/text_like_detail"
+            <RelativeLayout
+                android:id="@+id/btn_comments_relativelayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="좋아요"
-                android:layout_toLeftOf="@id/text_comments_detail"
-                android:layout_marginRight="16dp"
-                android:textAlignment="center"/>
-
-            <TextView
-                android:id="@+id/text_comments_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="댓글"
                 android:layout_alignParentRight="true"
-                android:textAlignment="center"/>
+                android:clickable="true"
+                android:layout_marginRight="16dp">
+
+                <TextView
+                    android:id="@+id/text_comments_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="댓글"
+                    android:layout_toRightOf="@id/text_like_detail"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:id="@+id/text_like_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좋아요"
+                    android:textAlignment="center"/>
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

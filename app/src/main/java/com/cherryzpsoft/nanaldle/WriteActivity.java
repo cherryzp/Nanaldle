@@ -80,6 +80,13 @@ public class WriteActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.exit_in_activity, R.anim.exit_out_activity);
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         switch (requestCode) {
@@ -180,8 +187,6 @@ public class WriteActivity extends AppCompatActivity {
         }
     };
 
-
-
     View.OnClickListener addTagListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -210,8 +215,6 @@ public class WriteActivity extends AppCompatActivity {
 
         }
     };
-
-    
 
     View.OnClickListener btnSaveListener = new View.OnClickListener() {
         @Override

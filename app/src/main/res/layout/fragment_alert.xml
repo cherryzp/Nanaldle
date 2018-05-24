@@ -3,7 +3,7 @@
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-android:background="#F0F00F">
+android:background="@color/color_black">
 
 <android.support.design.widget.AppBarLayout
     android:layout_width="match_parent"
@@ -25,12 +25,29 @@ android:background="#F0F00F">
 
 </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_alert"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="공사중"
+            android:textColor="@color/color_white"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_centerInParent="true"
+            android:textSize="48sp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_alert"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           >
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

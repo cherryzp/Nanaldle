@@ -55,6 +55,13 @@ public class CommentsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.exit_in_activity, R.anim.exit_out_activity);
+    }
+
     View.OnClickListener commentsListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -106,7 +113,7 @@ public class CommentsActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 jsonComments = response;
                 jsonParser();
-                new AlertDialog.Builder(CommentsActivity.this).setMessage(response).create().show();
+//                new AlertDialog.Builder(CommentsActivity.this).setMessage(response).create().show();
             }
         }, new Response.ErrorListener() {
             @Override

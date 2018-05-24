@@ -1,9 +1,11 @@
 package com.cherryzpsoft.nanaldle;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -35,6 +37,16 @@ public class MainActivity extends AppCompatActivity {
 
         selectedBottomNavigationBar();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this).setMessage("앱을 종료하시겠습니까?").setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        }).setNegativeButton("아니오", null).create().show();
     }
 
     public void setBottomNavigationBar(){
@@ -70,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case MENU_WRITE:
                         startActivity(new Intent(MainActivity.this, WriteActivity.class));
-                        overridePendingTransition(R.anim.enter_write_activity, R.anim.exit_write_activity);
+                        overridePendingTransition(R.anim.enter_in_activity, R.anim.enter_out_activity);
                         return;
 
                     case MENU_ALERT:
@@ -99,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(position==MENU_WRITE) {
                     startActivity(new Intent(MainActivity.this, WriteActivity.class));
-                    overridePendingTransition(R.anim.enter_write_activity, R.anim.exit_write_activity);
+                    overridePendingTransition(R.anim.enter_in_activity, R.anim.enter_out_activity);
                 }
 
             }

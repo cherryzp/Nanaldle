@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -95,6 +96,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
         ImageView commentsBtn;
         ToggleButton likeBtn;
         ToggleButton bookmarkBtn;
+        RelativeLayout relativeLayoutCommentsBtn;
 
         public VH(View itemView) {
             super(itemView);
@@ -109,6 +111,18 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             likeBtn = itemView.findViewById(R.id.btn_like);
             tvComments = itemView.findViewById(R.id.text_comments_feed);
             bookmarkBtn = itemView.findViewById(R.id.btn_bookmark);
+            relativeLayoutCommentsBtn = itemView.findViewById(R.id.btn_comments_relativelayout);
+
+            relativeLayoutCommentsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CommentsActivity.class);
+                    intent.putExtra("date", items.get(getLayoutPosition()).getDate());
+
+                    context.startActivity(intent);
+                    ((AppCompatActivity) context).overridePendingTransition(R.anim.enter_in_activity, R.anim.enter_out_activity);
+                }
+            });
 
             commentsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -117,7 +131,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                     intent.putExtra("date", items.get(getLayoutPosition()).getDate());
 
                     context.startActivity(intent);
-                    ((AppCompatActivity) context).overridePendingTransition(R.anim.enter_write_activity, R.anim.exit_write_activity);
+                    ((AppCompatActivity) context).overridePendingTransition(R.anim.enter_in_activity, R.anim.enter_out_activity);
                 }
             });
 
@@ -242,8 +256,6 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
                     intent.putExtra("date", items.get(getLayoutPosition()).getDate());
 
                     context.startActivity(intent);
-
-
                 }
             });
 

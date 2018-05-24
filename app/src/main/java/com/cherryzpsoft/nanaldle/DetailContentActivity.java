@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -34,6 +35,7 @@ public class DetailContentActivity extends AppCompatActivity {
     TextView tvTag;
     TextView tvLike;
     TextView tvComments;
+    RelativeLayout relativeLayoutCommentsBtn;
 
     ToggleButton likeBtn;
     ToggleButton bookmarkBtn;
@@ -53,6 +55,9 @@ public class DetailContentActivity extends AppCompatActivity {
         tvTag = findViewById(R.id.text_tag_detail);
         tvLike = findViewById(R.id.text_like_detail);
         tvComments = findViewById(R.id.text_comments_detail);
+
+        relativeLayoutCommentsBtn = findViewById(R.id.btn_comments_relativelayout);
+        relativeLayoutCommentsBtn.setOnClickListener(commentsListener);
 
         likeBtn = findViewById(R.id.btn_like);
         likeBtn.setOnClickListener(likeClickListener);
@@ -93,7 +98,7 @@ public class DetailContentActivity extends AppCompatActivity {
 
             intent.putExtra("date", tvDate.getText());
             startActivity(intent);
-            overridePendingTransition(R.anim.enter_write_activity, R.anim.exit_write_activity);
+            overridePendingTransition(R.anim.enter_in_activity, R.anim.enter_out_activity);
         }
     };
 

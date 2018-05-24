@@ -8,8 +8,6 @@
 
 	mysqli_query($conn, "set names utf8");
 
-	echo "$tag";
-
 	$sql1 = "SELECT m.content, m.date FROM main_contents m LEFT OUTER JOIN hashtag t ON m.no=t.content_no WHERE t.tag_item='$tag' GROUP BY t.content_no ORDER BY t.content_no DESC";
 	$result1 = mysqli_query($conn, $sql1);
 
@@ -20,8 +18,6 @@
 
 	$sql3 = "SELECT COUNT(t.content_no=c.content_no) comment_count FROM hashtag t LEFT OUTER JOIN contents_comment c ON t.content_no=c.content_no WHERE t.tag_item = '$tag' GROUP BY t.content_no ORDER BY t.content_no DESC";
 	$result3 = mysqli_query($conn, $sql3);
-
-	echo "$row_num";
 
 	echo "[";
 
