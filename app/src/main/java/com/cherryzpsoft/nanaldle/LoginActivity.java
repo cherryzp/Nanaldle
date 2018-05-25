@@ -197,7 +197,6 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         startActivity(new Intent(LoginActivity.this, PasswordActivity.class));
-
                         finish();
                     }
                 });
@@ -277,7 +276,5 @@ public class LoginActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         requestQueue.add(multiPartRequest);
-
     }
-
 }

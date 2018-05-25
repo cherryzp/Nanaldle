@@ -21,11 +21,13 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:padding="8dp"
+                    android:id="@+id/btn_back"
+                    android:padding="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/emoticon_02"/>
+                    android:clickable="true"
+                    android:src="@drawable/back_btn"/>
 
                 <TextView
                     android:layout_width="wrap_content"

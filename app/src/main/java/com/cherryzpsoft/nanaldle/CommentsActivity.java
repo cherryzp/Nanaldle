@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -26,6 +27,7 @@ public class CommentsActivity extends AppCompatActivity {
 
     EditText editComments;
     TextView addComments;
+    ImageView backBtn;
 
     ArrayList<String> items = new ArrayList<>();
     String comments;
@@ -42,8 +44,10 @@ public class CommentsActivity extends AppCompatActivity {
 
         editComments = findViewById(R.id.edit_comments);
         addComments = findViewById(R.id.add_comments_btn);
+        backBtn = findViewById(R.id.btn_back);
 
         addComments.setOnClickListener(commentsListener);
+        backBtn.setOnClickListener(backClickListener);
 
         recyclerView = findViewById(R.id.recyclerview_comments);
         recyclerViewAdapter = new CommentsRecyclerViewAdapter(this, items);
@@ -61,6 +65,14 @@ public class CommentsActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.exit_in_activity, R.anim.exit_out_activity);
     }
+
+    View.OnClickListener backClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+            overridePendingTransition(R.anim.exit_in_activity, R.anim.exit_out_activity);
+        }
+    };
 
     View.OnClickListener commentsListener = new View.OnClickListener() {
         @Override
