@@ -34,13 +34,13 @@
         android:layout_marginVertical="8dp"
         android:layout_below="@id/img_login"/>
 
-    <ImageView
-        android:id="@+id/btn_login_kakao"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:src="@drawable/kakao_login_img"
-        android:layout_below="@id/btn_login_facebook"
-        android:clickable="true"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/btn_login_kakao"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:src="@drawable/kakao_login_img"-->
+        <!--android:layout_below="@id/btn_login_facebook"-->
+        <!--android:clickable="true"/>-->
 
     <TextView
         android:id="@+id/login_comment"
@@ -51,7 +51,7 @@
         android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
         android:textColor="@color/color_black"
-        android:layout_below="@id/btn_login_kakao"/>
+        android:layout_below="@id/btn_login_facebook"/>
 
     <TextView
         android:id="@+id/login_postpone_btn"

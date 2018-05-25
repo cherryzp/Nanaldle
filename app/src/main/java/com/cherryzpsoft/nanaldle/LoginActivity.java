@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
     boolean isUploaded = false;
 
-    ImageView kakaoLoginBtn;
+//    ImageView kakaoLoginBtn;
 
     JSONObject jsonData;
 
@@ -66,19 +66,24 @@ public class LoginActivity extends AppCompatActivity {
         facebookLoginBtn = findViewById(R.id.btn_login_facebook);
         facebookLoginBtn.setOnClickListener(loginListener);
 
-        kakaoLoginBtn = findViewById(R.id.btn_login_kakao);
-        kakaoLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadStorageLoginData();
-                downloadDB();
-            }
-        });
+//        kakaoLoginBtn = findViewById(R.id.btn_login_kakao);
+//        kakaoLoginBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loadStorageLoginData();
+//                downloadDB();
+//            }
+//        });
 //        loginButton = findViewById(R.id.login_button);
 //        setFacebookLoginBtn();
 
-        postponeLoginBtn = findViewById(R.id.login_postpone_btn);
-        postponeLogin();
+        if(getSharedPreferences("LoginData", MODE_PRIVATE).getString("email", "null").toString().equals("null")){
+            postponeLoginBtn = findViewById(R.id.login_postpone_btn);
+            postponeLogin();
+        } else {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
 
     }
 
@@ -196,7 +201,7 @@ public class LoginActivity extends AppCompatActivity {
                 builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(LoginActivity.this, PasswordActivity.class));
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     }
                 });
@@ -219,12 +224,12 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    public void loadStorageLoginData(){
-        SharedPreferences preferences = getSharedPreferences("LoginData", MODE_PRIVATE);
-        loginId = preferences.getString("id", "로그인 정보 없음");
-        loginName = preferences.getString("name", "로그인 정보 없음");
-        loginEmail = preferences.getString("email", "로그인 정보 없음");
-    }
+//    public void loadStorageLoginData(){
+//        SharedPreferences preferences = getSharedPreferences("LoginData", MODE_PRIVATE);
+//        loginId = preferences.getString("id", "로그인 정보 없음");
+//        loginName = preferences.getString("name", "로그인 정보 없음");
+//        loginEmail = preferences.getString("email", "로그인 정보 없음");
+//    }
 
     public void uploadDB() {
 
@@ -233,7 +238,9 @@ public class LoginActivity extends AppCompatActivity {
         SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                new AlertDialog.Builder(LoginActivity.this).setMessage(response).setPositiveButton("OK", null).create().show();
+//                new AlertDialog.Builder(LoginActivity.this).setMessage(response).setPositiveButton("OK", null).create().show();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -252,29 +259,29 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void downloadDB() {
-
-        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/loadLoginDB.php";
-
-        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(loginEmail.equals(response)){
-                    isUploaded = true;
-                    new AlertDialog.Builder(LoginActivity.this).setMessage(response).setPositiveButton("OK", null).create().show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        multiPartRequest.addStringParam("email", loginEmail);
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        requestQueue.add(multiPartRequest);
-    }
+//    public void downloadDB() {
+//
+//        String serverUrl = "http://win9101.dothome.co.kr/nanaldle/loadLoginDB.php";
+//
+//        SimpleMultiPartRequest multiPartRequest = new SimpleMultiPartRequest(Request.Method.POST, serverUrl, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                if(loginEmail.equals(response)){
+//                    isUploaded = true;
+//                    new AlertDialog.Builder(LoginActivity.this).setMessage(response).setPositiveButton("OK", null).create().show();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//
+//        multiPartRequest.addStringParam("email", loginEmail);
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//
+//        requestQueue.add(multiPartRequest);
+//    }
 }

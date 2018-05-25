@@ -16,13 +16,13 @@
 	$sql2 = "SELECT m.no, COUNT(m.no=l.content_no) like_count FROM main_contents m LEFT OUTER JOIN contents_like l ON m.no=l.content_no GROUP BY m.no ORDER BY m.no DESC";
 	$result2 = mysqli_query($conn, $sql2);
 
-	$sql3 = "SELECT m.no, COUNT( m.no=l.content_no ) is_liked FROM main_contents m LEFT OUTER JOIN contents_like l ON m.no=l.content_no WHERE m.email = '$email' GROUP BY m.no ORDER BY m.no DESC";
+	$sql3 = "SELECT m.no, COUNT( m.no=l.content_no ) is_liked FROM main_contents m LEFT OUTER JOIN contents_like l ON m.no=l.content_no AND l.email='$email' GROUP BY m.no ORDER BY m.no DESC";
 	$result3 = mysqli_query($conn, $sql3);
 
 	$sql4 = "SELECT COUNT(m.no=c.content_no) comment_count FROM main_contents m LEFT OUTER JOIN contents_comment c ON m.no=c.content_no GROUP BY m.no ORDER BY m.no DESC";
 	$result4 = mysqli_query($conn, $sql4);
 
-	$sql5 = "SELECT m.no, COUNT(b.email = '$email') is_bookmarked FROM main_contents m LEFT OUTER JOIN contents_bookmark b ON m.no=b.content_no GROUP BY m.no ORDER BY m.no DESC";
+	$sql5 = "SELECT m.no, COUNT( m.no=b.content_no) is_bookmarked FROM main_contents m LEFT OUTER JOIN contents_bookmark b ON m.no=b.content_no AND b.email = '$email' GROUP BY m.no ORDER BY m.no DESC";
 	$result5 = mysqli_query($conn, $sql5);
 
 	echo "[";

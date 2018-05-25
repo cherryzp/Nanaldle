@@ -80,14 +80,17 @@ public class DetailContentActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            if (likeBtn.isChecked()) {
-                //선택됨
-                insertLike();
+            if(getSharedPreferences("LoginData", MODE_PRIVATE).getString("email", "null").toString().equals("null")){
+                Toast.makeText(DetailContentActivity.this, "로그인 이후에 이용할 수 있습니다.", Toast.LENGTH_SHORT).show();
             } else {
-                //선택되지 않음
-                deleteLike();
+                if (likeBtn.isChecked()) {
+                    //선택됨
+                    insertLike();
+                } else {
+                    //선택되지 않음
+                    deleteLike();
+                }
             }
-
         }
     };
 
@@ -105,12 +108,17 @@ public class DetailContentActivity extends AppCompatActivity {
     View.OnClickListener bookmarkClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(bookmarkBtn.isChecked()){
-                //선택됨
-                insertBookmark();
-            }else{
-                //선택되지 않음
-                deleteBookmark();
+
+            if(getSharedPreferences("LoginData", MODE_PRIVATE).getString("email", "null").toString().equals("null")){
+                Toast.makeText(DetailContentActivity.this, "로그인 이후에 이용할 수 있습니다.", Toast.LENGTH_SHORT).show();
+            } else {
+                if (bookmarkBtn.isChecked()) {
+                    //선택됨
+                    insertBookmark();
+                } else {
+                    //선택되지 않음
+                    deleteBookmark();
+                }
             }
         }
     };

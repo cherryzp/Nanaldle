@@ -11,6 +11,7 @@ public class WriteItem {
     private String likeCount;
     private String commentCount;
     private boolean liked;
+    private boolean bookmarked;
 
     public boolean isBookmarked() {
         return bookmarked;
@@ -19,8 +20,6 @@ public class WriteItem {
     public void setBookmarked(boolean bookmarked) {
         this.bookmarked = bookmarked;
     }
-
-    private boolean bookmarked;
 
     public String getCommentCount() {
         return commentCount;

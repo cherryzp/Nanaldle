@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -78,13 +79,16 @@ public class CommentsActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            new AlertDialog.Builder(CommentsActivity.this).setMessage("작성하시겠습니까?").setPositiveButton("예", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    insertComments();
-                }
-            }).setNegativeButton("아니오", null).create().show();
-
+            if(getSharedPreferences("LoginData", MODE_PRIVATE).getString("email", "null").toString().equals("null")){
+                Toast.makeText(CommentsActivity.this, "로그인 이후에 이용할 수 있습니다.", Toast.LENGTH_SHORT).show();
+            } else {
+                new AlertDialog.Builder(CommentsActivity.this).setMessage("작성하시겠습니까?").setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        insertComments();
+                    }
+                }).setNegativeButton("아니오", null).create().show();
+            }
         }
     };
 

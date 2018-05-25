@@ -81,8 +81,12 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case MENU_WRITE:
-                        startActivity(new Intent(MainActivity.this, WriteActivity.class));
-                        overridePendingTransition(R.anim.enter_in_activity, R.anim.enter_out_activity);
+                        if(!getSharedPreferences("LoginData", MODE_PRIVATE).getString("email", "null").toString().equals("null")){
+                            startActivity(new Intent(MainActivity.this, WriteActivity.class));
+                            overridePendingTransition(R.anim.enter_in_activity, R.anim.enter_out_activity);
+                        } else {
+                            Toast.makeText(MainActivity.this, "로그인 이후에 이용할 수 있습니다.", Toast.LENGTH_SHORT).show();
+                        }
                         return;
 
                     case MENU_ALERT:
@@ -110,8 +114,12 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(int position) {
 
                 if(position==MENU_WRITE) {
-                    startActivity(new Intent(MainActivity.this, WriteActivity.class));
-                    overridePendingTransition(R.anim.enter_in_activity, R.anim.enter_out_activity);
+                    if(!getSharedPreferences("LoginData", MODE_PRIVATE).getString("email", "null").toString().equals("null")){
+                        startActivity(new Intent(MainActivity.this, WriteActivity.class));
+                        overridePendingTransition(R.anim.enter_in_activity, R.anim.enter_out_activity);
+                    } else {
+                        Toast.makeText(MainActivity.this, "로그인 이후에 이용할 수 있습니다.", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }
