@@ -48,14 +48,13 @@
                 android:layout_marginBottom="24dp"
                 android:adjustViewBounds="true"
                 android:layout_centerHorizontal="true"
-                android:scaleType="centerCrop"
                 android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/text_content_detail"
                 android:layout_marginHorizontal="32dp"
                 android:textAlignment="center"
-                android:text="룰룰룰룰"
+                android:text=""
                 android:textColor="@color/color_black"
                 android:textSize="16dp"
                 android:layout_below="@id/img_content_detail"
