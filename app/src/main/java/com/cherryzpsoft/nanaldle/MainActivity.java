@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public void setBottomNavigationBar(){
 
         bottomNavigationBar.addItem(new BottomNavigationItem(android.R.drawable.ic_dialog_dialer, null));
-        bottomNavigationBar.addItem(new BottomNavigationItem(android.R.drawable.ic_menu_search, null));
+        bottomNavigationBar.addItem(new BottomNavigationItem(android.R.drawable.ic_search_category_default, null));
         bottomNavigationBar.addItem(new BottomNavigationItem(android.R.drawable.ic_input_add, null));
         bottomNavigationBar.addItem(new BottomNavigationItem(android.R.drawable.ic_popup_reminder, null));
         bottomNavigationBar.addItem(new BottomNavigationItem(android.R.drawable.ic_menu_myplaces, null));
