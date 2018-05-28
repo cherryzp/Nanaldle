@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void setBottomNavigationBar(){
 
-        bottomNavigationBar.addItem(new BottomNavigationItem(android.R.drawable.ic_dialog_dialer, null));
-        bottomNavigationBar.addItem(new BottomNavigationItem(android.R.drawable.ic_search_category_default, null));
-        bottomNavigationBar.addItem(new BottomNavigationItem(android.R.drawable.ic_input_add, null));
-        bottomNavigationBar.addItem(new BottomNavigationItem(android.R.drawable.ic_popup_reminder, null));
-        bottomNavigationBar.addItem(new BottomNavigationItem(android.R.drawable.ic_menu_myplaces, null));
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_menu_icon_1, null));
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_menu_icon_2, null));
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_menu_icon_3, null));
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_menu_icon_4, null));
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.ic_menu_icon_5, null));
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED_NO_TITLE);
         bottomNavigationBar.setActiveColor(R.color.color_black);
         bottomNavigationBar.initialise();
