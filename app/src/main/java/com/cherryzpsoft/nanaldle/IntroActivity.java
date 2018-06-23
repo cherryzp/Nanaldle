@@ -12,6 +12,7 @@ import java.util.TimerTask;
 
 public class IntroActivity extends AppCompatActivity {
 
+    
     ImageView ivIntro;
     Animation animation;
 
