@@ -81,9 +81,13 @@ public class WriteActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        overridePendingTransition(R.anim.exit_in_activity, R.anim.exit_out_activity);
+        new AlertDialog.Builder(WriteActivity.this).setMessage("작성을 취소하시겠습니까?").setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                overridePendingTransition(R.anim.exit_in_activity, R.anim.exit_out_activity);
+            }
+        }).setNegativeButton("아니오", null).create().show();
     }
 
     @Override

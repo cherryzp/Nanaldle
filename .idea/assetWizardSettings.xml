@@ -63,8 +63,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="like_selected_icon" />
-                            <entry key="sourceFile" value="D:\Image\DiaryProject\아이콘\baseline-favorite-24px.svg" />
+                            <entry key="outputName" value="ic_baseline_more_v" />
+                            <entry key="sourceFile" value="D:\Image\DiaryProject\아이콘\baseline-more_vert-24px.svg" />
                           </map>
                         </option>
                       </PersistentState>

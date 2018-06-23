@@ -12,10 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,6 +90,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
 
         TextView tvDate;
         ImageView ivEmoticon;
+        ImageView optionBtn;
         ImageView ivContent;
         TextView tvContent;
         TextView tvTag;
@@ -103,6 +106,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
 
             tvDate = itemView.findViewById(R.id.date_card_feed);
             ivEmoticon = itemView.findViewById(R.id.emoticon_card_feed);
+            optionBtn = itemView.findViewById(R.id.option_btn);
             ivContent = itemView.findViewById(R.id.img_content_feed);
             tvContent = itemView.findViewById(R.id.text_content_feed);
             tvTag = itemView.findViewById(R.id.text_tag_feed);
@@ -112,6 +116,27 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter {
             tvComments = itemView.findViewById(R.id.text_comments_feed);
             bookmarkBtn = itemView.findViewById(R.id.btn_bookmark);
             relativeLayoutCommentsBtn = itemView.findViewById(R.id.btn_comments_relativelayout);
+
+            optionBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                //todo: 삭제버튼 연동 email을 통한 자료 검증
+//                    PopupMenu popupMenu = new PopupMenu(context, v);
+//                    ((Activity)context).getMenuInflater().inflate(R.menu.popup_option_menu, popupMenu.getMenu());
+//                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                        @Override
+//                        public boolean onMenuItemClick(MenuItem item) {
+//
+//                            switch (item.getItemId()){
+//                                case R.id.delete_item:
+//
+//                                    break;
+//                            }
+//                            return false;
+//                        }
+//                    });
+                }
+            });
 
             relativeLayoutCommentsBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

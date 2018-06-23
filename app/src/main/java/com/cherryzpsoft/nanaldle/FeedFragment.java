@@ -97,6 +97,7 @@ public class FeedFragment extends Fragment {
                 item = new WriteItem();
                 jsonObject = jsonArray.getJSONObject(i);
                 item.setEmoticon(jsonObject.getString("emoticon"));
+                item.setEmail(jsonObject.getString("email"));
                 item.setDate(jsonObject.getString("date"));
                 item.setCommentCount(jsonObject.getString("comment_count"));
                 if(!jsonObject.getString("img").toString().equals("null")) item.setImg("http://win9101.dothome.co.kr/nanaldle/" + jsonObject.getString("img"));

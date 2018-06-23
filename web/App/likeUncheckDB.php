@@ -14,7 +14,7 @@
 	$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 	$contents_no = $row[no];
 
-	$sql = "DELETE FROM contents_like WHERE content_no = '$row[no]'";
+	$sql = "DELETE FROM contents_like WHERE content_no = '$row[no]' AND email = '$email'";
 	$result = mysqli_query($conn, $sql);
 
 	$sql = "SELECT COUNT(m.no=l.content_no) like_count FROM main_contents m LEFT OUTER JOIN contents_like l ON m.no=l.content_no WHERE m.date='$dateTime'";

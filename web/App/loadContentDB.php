@@ -8,7 +8,7 @@
 
 	mysqli_query($conn, "set names utf8");
 
-	$sql = "SELECT DISTINCT m.content, m.img, t.tag_item, m.emoticon, m.date FROM main_contents AS m LEFT OUTER JOIN hashtag AS t ON m.no=t.content_no ORDER BY m.no DESC";
+	$sql = "SELECT DISTINCT m.content, m.img, t.tag_item, m.emoticon, m.date, m.email FROM main_contents AS m LEFT OUTER JOIN hashtag AS t ON m.no=t.content_no ORDER BY m.no DESC";
 	$result = mysqli_query($conn, $sql);
 
 	$row_num = mysqli_num_rows($result);
@@ -38,7 +38,7 @@
 		$row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC);
 		$row5 = mysqli_fetch_array($result5, MYSQLI_ASSOC);
 
-		echo "{\"content\":\"$row[content]\", \"img\":\"$row[img]\", \"tag\":\"$row[tag_item]\", \"emoticon\":\"$row[emoticon]\", \"date\":\"$row[date]\",";
+		echo "{\"content\":\"$row[content]\", \"img\":\"$row[img]\", \"tag\":\"$row[tag_item]\", \"emoticon\":\"$row[emoticon]\", \"date\":\"$row[date]\", \"email\":\"$row[email]\",";
 		echo " \"isliked\":\"$row3[is_liked]\",";
 		echo " \"comment_count\":\"$row4[comment_count]\",";
 		echo " \"isbookmarked\":\"$row5[is_bookmarked]\",";
